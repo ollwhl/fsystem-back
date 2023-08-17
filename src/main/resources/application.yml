@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 1120
+    url: jdbc:mysql://localhost/fsystem?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+
+
