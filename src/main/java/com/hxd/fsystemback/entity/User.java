@@ -12,10 +12,6 @@ import java.util.Objects;
 
 @Data
 public class User {
-    @Resource
-    @JsonIgnore
-    private UserMapper userMapper;
-
     private Integer id;
     private String name;
     private String password;

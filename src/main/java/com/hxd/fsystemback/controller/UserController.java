@@ -12,11 +12,11 @@ import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8080")
-@RestController
-@RequestMapping("/user")
+@CrossOrigin
+@RestController//将返回数据变为jason格式
+@RequestMapping("/user")//前缀
 public class UserController {
-    @Resource
+    @Resource//从ioc中取出
     UserService userService;
     @GetMapping("/stuff")
     public Result getStuff(Params params){
@@ -30,6 +30,11 @@ public class UserController {
     }
     @GetMapping("/admin/search")
     public Result searchAdmin(Params params){
+        PageInfo<User> list= userService.getUserByName(params);
+        return  Result.success(list);
+    }
+    @GetMapping("/stuff/search")
+    public Result searchStuff(Params params){
         PageInfo<User> list= userService.getUserByName(params);
         return  Result.success(list);
     }

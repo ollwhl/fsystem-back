@@ -8,9 +8,11 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 @Mapper
 public interface PartsMapper {
-    @Select("SELECT * FROM parts")
-    public List<Parts> getAllParts();
+    @Select("SELECT * FROM parts where `group` = '2'")
+    public List<Parts> getPart();
 
-    @Select("SELECT * FROM parts WHERE name LIKE #{keyword}")
-    List<Parts> getPartsByName(@Param("name")String name);
+    @Select("SELECT * FROM parts WHERE name LIKE #{keyword} AND 'group' = '2'")
+    List<Parts>  searchPartsByName(@Param("keyword")String keyword);
+
+
 }

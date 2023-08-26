@@ -6,20 +6,20 @@ import lombok.Data;
 public class Result {
     private static final String SUCCESS = "0";
     private static final String ERROR = "-1";
-    private String code;
+    private String code;//返回状态码
     private String msg;
     private Object data;
 
-    public static Result success(){
+    public static Result success(){//result succeess function name
         Result result =new Result();
         result.setCode(SUCCESS);
         return result;
     }
     public static Result success(Object data){
-        Result resault = new Result();
-        resault.setCode(SUCCESS);
-        resault.setData(data);
-        return resault;
+        Result result = new Result();
+        result.setCode(SUCCESS);
+        result.setData(data);
+        return result;
     }
     public static Result error(String msg){
         Result result =new Result();

@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Parts {
-    private String id;
     private String name;
-    private int num;
-    private int min;
+    private int number;
+    private String standard;
+    private String note;
 }

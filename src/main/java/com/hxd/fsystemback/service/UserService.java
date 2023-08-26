@@ -40,7 +40,7 @@ public class UserService {
 
         return PageInfo.of(list);
     }
-    public PageInfo<User> getUserByName(Params params){
+    public PageInfo<User> getUserByName(Params params){//按名搜索返回列表
         PageHelper.startPage(params.getPageNum(),params.getPageSize());
         List<User> list=userMapper.getUsersByName(params.getKeyword());
         return PageInfo.of(list);
@@ -53,7 +53,7 @@ public class UserService {
         return userMapper.editUser(user.getId(),user.getName(), user.getPassword(),user.getGroup(),user.getPhone(),user.getNote());
     }
     public int deleteUser(User user){
-        System.out.println();
+
         return userMapper.deleteUser(user.getId());
     }
 
