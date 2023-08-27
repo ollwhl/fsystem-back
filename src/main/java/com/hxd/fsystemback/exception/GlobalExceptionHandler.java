@@ -17,8 +17,8 @@ public class GlobalExceptionHandler {
 //    @ExceptionHandler(Exception.class)
 //    @ResponseBody
 //    public Result error(HttpServletRequest request,Exception e){
-//        log.error("出错啦！而且不知道是为啥！");
-//        return Result.error("出错啦！而且不知道是为啥！");
+//        log.error("UnKnowError: " + e.getMessage());
+//        return Result.error("UnKnowError:" + e.getMessage());
 //    }
     @ExceptionHandler(SQLException.class)
     @ResponseBody
@@ -32,9 +32,16 @@ public class GlobalExceptionHandler {
         return Result.error(e.getMsg());
     }
 
-    @ExceptionHandler(NullPointerException.class)
+//    @ExceptionHandler(NullPointerException.class)
+//    @ResponseBody
+//    public void handleNullPointerException(HttpServletRequest request, NullPointerException e) {
+//
+//    }
+
+    @ExceptionHandler(TransactionException.class)
     @ResponseBody
-    public void handleNullPointerException(HttpServletRequest request, NullPointerException e) {
+    public  Result handleTransactionException(HttpServletRequest request, TransactionException e){
+        return Result.error("TranslationException");
     }
 
 }

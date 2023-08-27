@@ -9,7 +9,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -30,6 +29,12 @@ public class JwtTokenUtils {
         return JWT.create().withAudience(userId)
                 .withExpiresAt(DateUtil.offsetHour(new Date(),2))
                 .sign(Algorithm.HMAC256(sign));
+    }
+
+    public static String getGroupByToken(String token){
+        String userId= JWT.decode(token).getAudience().get(0);//解码token 获得userid
+        User user = staticUserService.findUserById(Integer.parseInt(userId));//找出后台中的该id的User
+        return user.getGroup();
     }
 
 
