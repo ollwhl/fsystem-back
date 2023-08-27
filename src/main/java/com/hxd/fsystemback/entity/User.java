@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import lombok.Data;
 import org.apache.ibatis.jdbc.Null;
 
+import java.beans.Transient;
 import java.util.Objects;
 
 
@@ -18,7 +19,7 @@ public class User {
     private String phone;
     private String note;
     private String group;
-
+    private String token;
     public User() {
     }
 }

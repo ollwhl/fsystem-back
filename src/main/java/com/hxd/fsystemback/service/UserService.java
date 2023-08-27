@@ -1,5 +1,6 @@
 package com.hxd.fsystemback.service;
 
+import com.hxd.fsystemback.common.JwtTokenUtils;
 import com.hxd.fsystemback.common.Result;
 import com.hxd.fsystemback.dao.UserMapper;
 import com.hxd.fsystemback.entity.Params;
@@ -83,9 +84,13 @@ public class UserService {
             throw new CustomException("User not Exist");
         }
         if(Objects.equals(thisUser.getPassword(), user.getPassword())){
+            thisUser.setToken(JwtTokenUtils.genToken(thisUser.getId().toString(),thisUser.getPassword()));
             return Result.success(thisUser);
         }else{
             throw new CustomException("Password not right");
         }
+    }
+    public User findUserById(int id){
+        return userMapper.findUserById(id);
     }
 }

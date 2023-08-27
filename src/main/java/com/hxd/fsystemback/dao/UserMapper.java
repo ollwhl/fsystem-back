@@ -20,6 +20,8 @@ public interface UserMapper {
     List<User> getUsersByName(@Param("keyword") String keyword);
     @Select("SELECT * FROM user WHERE name = #{name}")
     User findUserByName(@Param("name") String name);
+    @Select("SELECT * FROM user WHERE id = #{id}")
+    User findUserById(@Param("id") int id);
     @Insert("INSERT INTO user (`name`, `password`, `phone`, `group`, `note`) VALUES (#{name},#{password},#{phone},#{group},#{note});")
     int addUser(@Param("name") String name,@Param("password") String password,@Param("group") String group,@Param("phone") String phone,@Param("note") String note);
     @Update("UPDATE user SET `name` = #{name}, `password` = #{password}, `phone` = #{phone}, `group` = #{group}, `note` = #{note} WHERE (`id` = #{id});")

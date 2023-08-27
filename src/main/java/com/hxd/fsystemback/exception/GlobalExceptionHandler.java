@@ -32,4 +32,9 @@ public class GlobalExceptionHandler {
         return Result.error(e.getMsg());
     }
 
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseBody
+    public void handleNullPointerException(HttpServletRequest request, NullPointerException e) {
+    }
+
 }
