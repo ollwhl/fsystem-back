@@ -3,7 +3,6 @@ package com.hxd.fsystemback.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.common.JwtTokenUtils;
-import com.hxd.fsystemback.common.Result;
 import com.hxd.fsystemback.dao.PartsMapper;
 import com.hxd.fsystemback.entity.Params;
 import com.hxd.fsystemback.entity.Parts;
@@ -29,11 +28,10 @@ public class PartsService {
         List<Parts> list=partsMapper.searchPartsByName(params.getKeyword(),JwtTokenUtils.getGroupByToken(params.getToken()));
         return PageInfo.of(list);
     }
-
     @Transactional(rollbackFor = TransactionException.class)
     public void countPart(Params params) throws CustomException {
         Integer num;
-        Parts parts = partsMapper.searchPartByID(params.getId());
+        Parts parts = partsMapper.findPartByID(params.getId());
         System.out.println(parts);
         if (parts == null) {
             throw new CustomException("not find part");

@@ -1,10 +1,8 @@
 package com.hxd.fsystemback.dao;
 
 import com.hxd.fsystemback.entity.Parts;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.hxd.fsystemback.entity.Product;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 @Mapper
@@ -16,11 +14,15 @@ public interface PartsMapper {
     List<Parts>  searchPartsByName(@Param("keyword")String keyword,@Param("group") String group);
 
     @Select("SELECT * FROM parts WHERE id = #{id}")
-    Parts searchPartByID(@Param("id")Integer id);
-
+    Parts findPartByID(@Param("id")Integer id);
+    @Select("SELECT * FROM parts WHERE name = #{name}")
+    Parts findPartsByName(String name);
     @Update("UPDATE parts SET num = #{num} WHERE (id = #{id})")
     void updatePartNum(Integer id, Integer num);
 
     @Update("UPDATE parts SET confirm = #{confirmNum} WHERE (id = #{id})")
     void updatePartConfirmNum(Integer id, Integer confirmNum);
+
+    @Insert("INSERT INTO parts (`name`, `standard`, `group`, `note`) VALUES (#{name},#{standard},#{group},#{note})")
+    void addPart(String name, String standard, String group, String note);
 }
