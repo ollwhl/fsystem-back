@@ -23,6 +23,11 @@ public class TechController {
         PageInfo<Tech> list = techService.getProductTech(params);
         return Result.success(list);
     }
+    @GetMapping("/search")
+    public Result searchTechByProductName(){
+        return null;
+    }
+
     //传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
     @PostMapping("/addParts")
     public Result addParts(@RequestBody Parts parts) throws CustomException {
@@ -33,6 +38,18 @@ public class TechController {
     @PostMapping("/addTech")
     public Result addTech(@RequestBody List<Tech> list) throws CustomException {
         techService.addTech(list);
+        return Result.success();
+    }
+
+    @PostMapping("/edit")
+    public Result editTechParts(@RequestBody Tech tech) throws CustomException {
+        techService.editTechParts(tech);
+        return Result.success();
+    }
+
+    @PostMapping("/delParts")
+    public Result delTechParts(@RequestBody Tech tech) throws CustomException {
+        techService.delTechParts(tech);
         return Result.success();
     }
 

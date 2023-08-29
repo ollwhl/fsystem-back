@@ -68,10 +68,16 @@ public class TechService {
                 throw new CustomException("parts not exist");
             }
             if(techMapper.findTechByProductIdAndPartsId(product.getId(),parts.getId()) != null){
-                throw new CustomException("parts already exist in this tech");
+                throw new CustomException("parts already exist in this product tech");
             }
             techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
         }
+    }
+    public void editTechParts(Tech tech){
+        techMapper.editTechParts(tech.getId(),tech.getNum());
+    }
+    public void delTechParts(Tech tech){
+        techMapper.delTechParts(tech.getId());
     }
 
 }
