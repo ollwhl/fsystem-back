@@ -24,8 +24,9 @@ public class TechController {
         return Result.success(list);
     }
     @GetMapping("/search")
-    public Result searchTechByProductName(){
-        return null;
+    public Result searchTechByProductName(Params params){
+        PageInfo<Tech> list =techService.searchTechByProductName(params);
+        return Result.success(list);
     }
 
     //传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
@@ -34,6 +35,7 @@ public class TechController {
         techService.addParts(parts);
         return Result.success();
     }
+
     //传入包含{productName,partsName,num}的List
     @PostMapping("/addTech")
     public Result addTech(@RequestBody List<Tech> list) throws CustomException {

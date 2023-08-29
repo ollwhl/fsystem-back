@@ -14,8 +14,6 @@ import com.hxd.fsystemback.exception.TransactionException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.swing.*;
 import java.util.List;
 
 @Service
@@ -29,6 +27,11 @@ public class TechService {
     public PageInfo<Tech> getProductTech(Params params) {
         PageHelper.startPage(params.getPageNum(),params.getPageSize());
         List<Tech> list= techMapper.getProductTech();
+        return PageInfo.of(list);
+    }
+    public PageInfo<Tech> searchTechByProductName(Params params) {
+        PageHelper.startPage(params.getPageNum(),params.getPageSize());
+        List<Tech> list = techMapper.searchTechByProductName(params.getKeyword());
         return PageInfo.of(list);
     }
     public void addParts(Parts parts) throws CustomException {
@@ -79,5 +82,6 @@ public class TechService {
     public void delTechParts(Tech tech){
         techMapper.delTechParts(tech.getId());
     }
+
 
 }
