@@ -12,4 +12,5 @@ public class Parts {
     private Integer min;
     private Integer confirm;
     private String group;
+    private int preWarn;
 }

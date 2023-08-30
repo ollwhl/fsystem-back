@@ -4,13 +4,17 @@ import lombok.Data;
 
 @Data
 public class Tech {
-    private Integer id;
-    private Integer productId;
+
     private String productName;
     private String productStandard;
-    private Integer partsId;
-    private String partsName;
     private String partsStandard;
+    private String partsName;
     private Integer num;
+    private String partsGroup;
+
+
+    private Integer id;
+    private Integer partsId;
+    private Integer productId;
 
 }

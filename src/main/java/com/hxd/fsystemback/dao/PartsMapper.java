@@ -25,4 +25,7 @@ public interface PartsMapper {
 
     @Insert("INSERT INTO parts (`name`, `standard`, `group`, `note`) VALUES (#{name},#{standard},#{group},#{note})")
     void addPart(String name, String standard, String group, String note);
+
+    @Select("SELECT * FROM parts")
+    List<Parts> getAllPart();
 }

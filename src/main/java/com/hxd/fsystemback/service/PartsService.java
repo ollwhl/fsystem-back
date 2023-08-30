@@ -20,7 +20,12 @@ public class PartsService {
     public PageInfo getPart(Params params) {
         //JwtTokenUtils.getGroupByToken(params.getToken())
         PageHelper.startPage(params.getPageNum(),params.getPageSize());
-        List<Parts> list = partsMapper.getPart(JwtTokenUtils.getGroupByToken(params.getToken()));
+        String group =JwtTokenUtils.getGroupByToken(params.getToken());
+        if (group.equals("管理员")){
+            List<Parts> list = partsMapper.getAllPart();
+            return PageInfo.of(list);
+        }
+        List<Parts> list = partsMapper.getPart(group);
         return PageInfo.of(list);
     }
     public PageInfo<Parts> searchPartByName(Params params){

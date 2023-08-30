@@ -14,4 +14,9 @@ public interface ProductMapper {
     Product findProductByName(String name);
     @Insert("INSERT INTO product (`name`, `standard`, `note`) VALUES (#{name},#{standard},#{note})")
     void addProduct(String name, String standard, String note);
+
+    @Select("SELECT * FROM product WHERE planeNum <> 0")
+    List<Product> getPlane();
+
+    void addPlane();
 }
