@@ -37,7 +37,7 @@ public class TechController {
     }
 
 
-    @PostMapping("/addTech")//传入包含{productName,partsName,num}的List
+    @PostMapping("/addTech")//传入每一条都包含{productName,partsName,num}的List
     public Result addTech(@RequestBody List<Tech> list) throws CustomException {
         techService.addTech(list);
         return Result.success();
@@ -49,11 +49,12 @@ public class TechController {
         return Result.success();
     }
 
-    @PostMapping("/delParts")//传入id
+    @PostMapping("/delParts")//传入idget
     public Result delTechParts(@RequestBody Tech tech) throws CustomException {
         techService.delTechParts(tech);
         return Result.success();
     }
+
 
 
 

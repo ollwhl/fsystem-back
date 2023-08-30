@@ -2,6 +2,7 @@ package com.hxd.fsystemback.dao;
 
 import com.hxd.fsystemback.entity.Parts;
 import com.hxd.fsystemback.entity.Product;
+import com.hxd.fsystemback.entity.Tech;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -28,6 +29,11 @@ public interface PartsMapper {
 
     @Select("SELECT * FROM parts")
     List<Parts> getAllPart();
+
+    @Select("SELECT * FROM parts WHERE confirm <> 0")
+    List<Parts> getConfirmParts();
     @Update("UPDATE parts SET `min` = #{num} WHERE (`id` = #{id});")
     void setMin(int id, int num);
+
+
 }
