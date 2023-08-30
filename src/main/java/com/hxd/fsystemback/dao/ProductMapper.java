@@ -4,6 +4,7 @@ import com.hxd.fsystemback.entity.Product;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public interface ProductMapper {
 
     @Select("SELECT * FROM product WHERE planeNum <> 0")
     List<Product> getPlane();
+    @Update("UPDATE product SET planenum = #{planeNum}, planedate = #{planeDate} WHERE (`name` = #{productName});")
+    void addPlane(String productName, int planeNum, String planeDate);
 
-    void addPlane();
+
 }

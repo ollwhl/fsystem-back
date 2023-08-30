@@ -28,4 +28,6 @@ public interface PartsMapper {
 
     @Select("SELECT * FROM parts")
     List<Parts> getAllPart();
+    @Update("UPDATE parts SET `min` = #{num} WHERE (`id` = #{id});")
+    void setMin(int id, int num);
 }

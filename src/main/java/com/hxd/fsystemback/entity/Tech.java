@@ -11,6 +11,7 @@ public class Tech {
     private String partsName;
     private Integer num;
     private String partsGroup;
+    private int preWarn;
 
 
     private Integer id;

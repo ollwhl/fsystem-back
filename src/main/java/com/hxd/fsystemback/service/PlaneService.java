@@ -7,8 +7,10 @@ import com.hxd.fsystemback.dao.ProductMapper;
 import com.hxd.fsystemback.dao.TechMapper;
 import com.hxd.fsystemback.entity.Params;
 import com.hxd.fsystemback.entity.Product;
+import com.hxd.fsystemback.entity.Tech;
 import com.hxd.fsystemback.exception.TransactionException;
 import jakarta.annotation.Resource;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +31,19 @@ public class PlaneService {
         return PageInfo.of(list);
     }
     @Transactional(rollbackFor = TransactionException.class)
-    public void addPlane(Params params){
-        productMapper.addPlane();
+    public void editPlane(Product product){
+        productMapper.addPlane(product.getName(),product.getPlaneNum(),product.getPlaneDate());
+        List<Tech> techList = techMapper.findTechByProductName(product.getName());
+        int min;
+        for(Tech tech : techList){
+            min = (tech.getNum() * product.getPlaneNum()) +tech.getPreWarn();
+            partsMapper.setMin(tech.getPartsId(),min);
+        }
+    }
+    @Transactional(rollbackFor = TransactionException.class)
+    public void delPlane(Product product){
+        product.setPlaneNum(0);
+        product.setPlaneDate(null);
+        editPlane(product);
     }
 }

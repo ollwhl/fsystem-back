@@ -1,12 +1,13 @@
 package com.hxd.fsystemback.controller;
 
-import com.hxd.fsystemback.entity.Parts;
-import com.hxd.fsystemback.service.PartsService;
+import com.github.pagehelper.PageInfo;
+import com.hxd.fsystemback.common.Result;
+import com.hxd.fsystemback.entity.Params;
+import com.hxd.fsystemback.entity.Product;
+import com.hxd.fsystemback.exception.CustomException;
 import com.hxd.fsystemback.service.PlaneService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -15,5 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlaneController {
     @Resource
     PlaneService planeService;
+
+    @GetMapping("/getPlane")
+    public Result getPlane(Params params){
+        PageInfo<Product> list =planeService.getPlane(params);
+        return Result.success(list);
+    }
+    @PostMapping("/editPlane")//传入name，planeNum,planeDate
+    public Result editPlane(@RequestBody Product product) throws CustomException {
+        planeService.editPlane(product);
+        return Result.success();
+    }
+    @PostMapping("/delPlane")//传入name
+    public Result delPlane(@RequestBody Product product) throws CustomException {
+        planeService.delPlane(product);
+        return Result.success();
+    }
 
 }
