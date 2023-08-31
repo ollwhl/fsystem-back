@@ -20,6 +20,4 @@ public class User {
     private String note;
     private String group;
     private String token;
-    public User() {
-    }
 }

@@ -34,23 +34,6 @@ public class TechService {
         List<Tech> list = techMapper.searchTechByProductName(params.getKeyword());
         return PageInfo.of(list);
     }
-    public void addParts(Parts parts) throws CustomException {
-        if (parts.getGroup() == null){
-            Product product = productMapper.findProductByName(parts.getName());
-            //System.out.println(product);
-        if (product != null){
-                //System.out.println("product already exist");
-                throw new CustomException("product already exist");
-            }
-            productMapper.addProduct(parts.getName(),parts.getStandard(),parts.getNote());
-        }else{
-            if (partsMapper.findPartsByName(parts.getName()) != null){
-                throw new CustomException("parts already exist");
-            }
-            partsMapper.addPart(parts.getName(),parts.getStandard(),parts.getGroup(),parts.getNote());
-        }
-
-    }
     @Transactional(rollbackFor = TransactionException.class)
     public void addTech(List<Tech> techList) throws CustomException {
         String productName = techList.get(0).getProductName();
@@ -84,4 +67,25 @@ public class TechService {
     }
 
 
+    public void addTechRow(Tech tech) throws CustomException {
+        String productName = tech.getProductName();
+        String partsName;
+        Parts parts;
+        Product product = productMapper.findProductByName(productName);
+        if(product == null){
+            throw new CustomException("product not exist");
+        }
+        if(tech.getProductName()!=productName){
+            throw new CustomException("parts not compare product");
+        }
+        partsName = tech.getPartsName();
+        parts = partsMapper.findPartsByName(partsName);
+        if(parts == null){
+            throw new CustomException("parts not exist");
+        }
+        if(techMapper.findTechByProductIdAndPartsId(product.getId(),parts.getId()) != null){
+            throw new CustomException("parts already exist in this product tech");
+        }
+        techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
+    }
 }

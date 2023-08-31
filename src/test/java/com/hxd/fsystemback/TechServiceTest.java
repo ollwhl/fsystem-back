@@ -45,18 +45,6 @@ public class TechServiceTest {
         List<Tech> techList = pageInfo.getList();
         ListPrintUtil.printList(techList);
     }
-    private void addPartsTest(){
-        Parts parts = new Parts();
-        parts.setName("test-name1");
-        parts.setStandard("test-standard");
-        parts.setNote("test-note");
-        //parts.setGroup("零件仓库");
-        try {
-            techService.addParts(parts);
-        }catch (CustomException e){
-            System.out.println("parts exist");
-        }
-    }
     private void addTechTest() throws CustomException {
         List<Tech> techList = new ArrayList<>();
         Tech tech1 = new Tech();

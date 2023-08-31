@@ -28,18 +28,16 @@ public class TechController {
         PageInfo<Tech> list =techService.searchTechByProductName(params);
         return Result.success(list);
     }
-
-
-    @PostMapping("/addParts")//传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
-    public Result addParts(@RequestBody Parts parts) throws CustomException {
-        techService.addParts(parts);
-        return Result.success();
-    }
-
-
+    @Deprecated
     @PostMapping("/addTech")//传入每一条都包含{productName,partsName,num}的List
     public Result addTech(@RequestBody List<Tech> list) throws CustomException {
         techService.addTech(list);
+        return Result.success();
+    }
+
+    @PostMapping("/addTechRow")//传入每一条都包含{productName,partsName,num}的List
+    public Result addTechRow(@RequestBody Tech Tech) throws CustomException {
+        techService.addTechRow(Tech);
         return Result.success();
     }
 
@@ -54,7 +52,11 @@ public class TechController {
         techService.delTechParts(tech);
         return Result.success();
     }
-
+    @PostMapping("/test")//传入每一条都包含{productName,partsName,num}的List
+    public Result test(@RequestBody String[] list) throws CustomException {
+        System.out.println(list);
+        return Result.success();
+    }
 
 
 
