@@ -28,12 +28,12 @@ public class TechController {
         PageInfo<Tech> list =techService.searchTechByProductName(params);
         return Result.success(list);
     }
-    @Deprecated
-    @PostMapping("/addTech")//传入每一条都包含{productName,partsName,num}的List
-    public Result addTech(@RequestBody List<Tech> list) throws CustomException {
-        techService.addTech(list);
-        return Result.success();
-    }
+//    @Deprecated
+//    @PostMapping("/addTech")//传入每一条都包含{productName,partsName,num}的List
+//    public Result addTech(@RequestBody List<Tech> list) throws CustomException {
+//        techService.addTech(list);
+//        return Result.success();
+//    }
 
     @PostMapping("/addTechRow")//传入每一条都包含{productName,partsName,num}的List
     public Result addTechRow(@RequestBody Tech Tech) throws CustomException {

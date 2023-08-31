@@ -34,30 +34,30 @@ public class TechService {
         List<Tech> list = techMapper.searchTechByProductName(params.getKeyword());
         return PageInfo.of(list);
     }
-    @Transactional(rollbackFor = TransactionException.class)
-    public void addTech(List<Tech> techList) throws CustomException {
-        String productName = techList.get(0).getProductName();
-        Product product = productMapper.findProductByName(productName);
-        if(product == null){
-            productMapper.addProduct(productName,null,null);
-        }
-        String partsName;
-        Parts parts;
-        for(Tech tech : techList){
-            if(tech.getProductName()!=productName){
-                throw new CustomException("parts not compare product");
-            }
-            partsName = tech.getPartsName();
-            parts = partsMapper.findPartsByName(partsName);
-            if(parts == null){
-                throw new CustomException("parts not exist");
-            }
-            if(techMapper.findTechByProductIdAndPartsId(product.getId(),parts.getId()) != null){
-                throw new CustomException("parts already exist in this product tech");
-            }
-            techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
-        }
-    }
+//    @Transactional(rollbackFor = TransactionException.class)
+//    public void addTech(List<Tech> techList) throws CustomException {
+//        String productName = techList.get(0).getProductName();
+//        Product product = productMapper.findProductByName(productName);
+//        if(product == null){
+//            productMapper.addProduct(productName,null,null);
+//        }
+//        String partsName;
+//        Parts parts;
+//        for(Tech tech : techList){
+//            if(tech.getProductName()!=productName){
+//                throw new CustomException("parts not compare product");
+//            }
+//            partsName = tech.getPartsName();
+//            parts = partsMapper.findPartsByName(partsName);
+//            if(parts == null){
+//                throw new CustomException("parts not exist");
+//            }
+//            if(techMapper.findTechByProductIdAndPartsId(product.getId(),parts.getId()) != null){
+//                throw new CustomException("parts already exist in this product tech");
+//            }
+//            techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
+//        }
+//    }
     public void editTechParts(Tech tech){
         techMapper.editTechParts(tech.getId(),tech.getNum());
     }
@@ -72,11 +72,12 @@ public class TechService {
         Parts parts;
         Product product = productMapper.findProductByName(productName);
         if(product == null){
-            throw new CustomException("product not exist");
+            productMapper.addProduct(productName,null,null);
+            product = productMapper.findProductByName(productName);
         }
-        if(tech.getProductName()!=productName){
-            throw new CustomException("parts not compare product");
-        }
+//        if(tech.getProductName()!=productName){
+//            throw new CustomException("parts not compare product");
+//        }
         partsName = tech.getPartsName();
         parts = partsMapper.findPartsByName(partsName);
         if(parts == null){
