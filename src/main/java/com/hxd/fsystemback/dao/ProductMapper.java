@@ -18,7 +18,7 @@ public interface ProductMapper {
 
     @Select("SELECT * FROM product WHERE planeNum <> 0")
     List<Product> getPlane();
-    @Update("UPDATE product SET planenum = #{planeNum}, planedate = #{planeDate} WHERE (`name` = #{productName});")
+    @Update("UPDATE product SET plannum = #{planeNum}, plandate = #{planeDate} WHERE (`name` = #{productName});")
     void addPlane(String productName, int planeNum, String planeDate);
 
 

@@ -9,6 +9,6 @@ public class Product {
     int num;
     String standard;
     String note;
-    int planeNum;
-    String planeDate;
+    int planNum;
+    String planDate;
 }

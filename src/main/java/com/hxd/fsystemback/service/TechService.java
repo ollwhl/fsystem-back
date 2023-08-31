@@ -39,9 +39,8 @@ public class TechService {
         String productName = techList.get(0).getProductName();
         Product product = productMapper.findProductByName(productName);
         if(product == null){
-            throw new CustomException("product not exist");
+            productMapper.addProduct(productName,null,null);
         }
-
         String partsName;
         Parts parts;
         for(Tech tech : techList){

@@ -10,7 +10,6 @@ import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.entity.Tech;
 import com.hxd.fsystemback.exception.TransactionException;
 import jakarta.annotation.Resource;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,18 +31,18 @@ public class PlaneService {
     }
     @Transactional(rollbackFor = TransactionException.class)
     public void editPlane(Product product){
-        productMapper.addPlane(product.getName(),product.getPlaneNum(),product.getPlaneDate());
+        productMapper.addPlane(product.getName(),product.getPlanNum(),product.getPlanDate());
         List<Tech> techList = techMapper.findTechByProductName(product.getName());
         int min;
         for(Tech tech : techList){
-            min = (tech.getNum() * product.getPlaneNum()) +tech.getPreWarn();
+            min = (tech.getNum() * product.getPlanNum()) +tech.getPreWarn();
             partsMapper.setMin(tech.getPartsId(),min);
         }
     }
     @Transactional(rollbackFor = TransactionException.class)
     public void delPlane(Product product){
-        product.setPlaneNum(0);
-        product.setPlaneDate(null);
+        product.setPlanNum(0);
+        product.setPlanDate(null);
         editPlane(product);
     }
 }
