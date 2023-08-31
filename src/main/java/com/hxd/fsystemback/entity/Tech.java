@@ -5,8 +5,10 @@ import lombok.Data;
 @Data
 public class Tech {
 
+
     private String productName;
     private String productStandard;
+    private String productNote;
     private String partsStandard;
     private String partsName;
     private Integer num;

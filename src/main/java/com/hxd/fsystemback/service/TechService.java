@@ -72,7 +72,7 @@ public class TechService {
         Parts parts;
         Product product = productMapper.findProductByName(productName);
         if(product == null){
-            productMapper.addProduct(productName,null,null);
+            productMapper.addProduct(productName,tech.getProductStandard(),tech.getProductNote());
             product = productMapper.findProductByName(productName);
         }
 //        if(tech.getProductName()!=productName){
