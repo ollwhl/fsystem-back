@@ -1,5 +1,6 @@
 package com.hxd.fsystemback.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.dao.PartsMapper;
@@ -24,6 +25,10 @@ public class TechService {
     PartsMapper partsMapper;
     @Resource
     ProductMapper productMapper;
+
+    @Resource
+    LogService logService;
+
     public PageInfo<Tech> getProductTech(Params params) {
         PageHelper.startPage(params.getPageNum(),params.getPageSize());
         List<Tech> list= techMapper.getProductTech();
@@ -58,11 +63,16 @@ public class TechService {
 //            techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
 //        }
 //    }
-    public void editTechParts(Tech tech){
+    public void editTechParts(Tech tech) throws JsonProcessingException {
+
         techMapper.editTechParts(tech.getId(),tech.getNum());
+        Tech thisTech = techMapper.findTechByID(tech.getId());
+        logService.setLog("修改了 "+thisTech.getProductName()+" 的产品构成中的 "+thisTech.getPartsName()+" 的数量为 "+thisTech.getNum());
     }
-    public void delTechParts(Tech tech){
+    public void delTechParts(Tech tech) throws JsonProcessingException {
         techMapper.delTechParts(tech.getId());
+        Tech thisTech = techMapper.findTechByID(tech.getId());
+        logService.setLog("删除了 "+thisTech.getProductName()+" 的产品构成中的 "+thisTech.getPartsName());
     }
 
 
@@ -72,7 +82,11 @@ public class TechService {
         Parts parts;
         Product product = productMapper.findProductByName(productName);
         if(product == null){
-            productMapper.addProduct(productName,tech.getProductStandard(),tech.getProductNote());
+            int productId=tech.getProductId();
+            if (productId == 0){
+                throw new CustomException("product not exist,and don't have ID");
+            }
+            productMapper.addProduct(productId,productName,tech.getProductStandard(),tech.getProductNote());
             product = productMapper.findProductByName(productName);
         }
 //        if(tech.getProductName()!=productName){

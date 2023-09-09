@@ -13,13 +13,15 @@ public interface ProductMapper {
 
     @Select("SELECT * FROM product WHERE name = #{name}")
     Product findProductByName(String name);
-    @Insert("INSERT INTO product (`name`, `standard`, `note`) VALUES (#{name},#{standard},#{note})")
-    void addProduct(String name, String standard, String note);
+    @Insert("INSERT INTO product (`id`,`name`, `standard`, `note`) VALUES (#{id},#{name},#{standard},#{note})")
+    void addProduct(int id,String name, String standard, String note);
 
-    @Select("SELECT * FROM product WHERE planeNum <> 0")
+    @Select("SELECT * FROM product WHERE planNum <> 0")
     List<Product> getPlane();
     @Update("UPDATE product SET plannum = #{planeNum}, plandate = #{planeDate} WHERE (`name` = #{productName});")
-    void addPlane(String productName, int planeNum, String planeDate);
+    void editPlane(String productName, int planeNum, String planeDate);
+    @Update("UPDATE product SET `produce` = #{produce} WHERE (`id` = #{id});")
+    void dailyCheck(int id, int produce);
 
 
 }

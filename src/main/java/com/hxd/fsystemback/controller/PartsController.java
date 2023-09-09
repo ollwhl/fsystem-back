@@ -1,11 +1,13 @@
 package com.hxd.fsystemback.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.common.Result;
 import com.hxd.fsystemback.entity.Params;
 import com.hxd.fsystemback.entity.Parts;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.exception.CustomException;
+import com.hxd.fsystemback.service.LogService;
 import com.hxd.fsystemback.service.PartsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,9 @@ import org.springframework.web.service.annotation.PostExchange;
 public class PartsController {
     @Resource
     PartsService partsService;
+    @Resource
+    LogService logService;
+
     @GetMapping("/getPart")
     Result getPart(Params params){
         PageInfo<Parts> list = partsService.getPart(params);
@@ -49,15 +54,16 @@ public class PartsController {
         return Result.success(list);
     }
 
-    @PostMapping("/count")
-    public Result countPart(@RequestBody Params params) throws CustomException {
-        System.out.println(params);
-        partsService.countPart(params);
+    @PostMapping("/count")//传入零件的name和confirm
+    public Result countPart(@RequestBody Parts parts) throws CustomException, JsonProcessingException {
+        //System.out.println(parts);
+        partsService.countPart(parts);
+
         return Result.success();
     }
 
     @PostMapping("/addParts")//传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
-    public Result addParts(@RequestBody Parts parts) throws CustomException {
+    public Result addParts(@RequestBody Parts parts) throws CustomException, JsonProcessingException {
         partsService.addParts(parts);
         return Result.success();
     }

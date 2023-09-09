@@ -13,4 +13,6 @@ public class Parts {
     private Integer confirm;
     private String group;
     private int preWarn;
+    private int arrive;
+    private int lost;
 }

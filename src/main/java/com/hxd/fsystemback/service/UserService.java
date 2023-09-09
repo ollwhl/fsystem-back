@@ -76,7 +76,9 @@ public class UserService {
         if(userMapper.addUser(user.getName(), user.getPassword(),user.getGroup(),user.getPhone(),user.getNote()) != 1){
             throw new CustomException("未知原因添加失败");
         }
+
         return Result.success();
+
     }
     public Result login(User user) throws CustomException {
         User thisUser = userMapper.findUserByName(user.getName());

@@ -11,4 +11,5 @@ public class Product {
     String note;
     int planNum;
     String planDate;
+    int produce;
 }

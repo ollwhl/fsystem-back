@@ -15,6 +15,7 @@ public class Result {
         result.setCode(SUCCESS);
         return result;
     }
+    @AutoLog
     public static Result success(Object data){
         Result result = new Result();
         result.setCode(SUCCESS);

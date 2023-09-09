@@ -1,8 +1,6 @@
 package com.hxd.fsystemback.dao;
 
 import com.hxd.fsystemback.entity.Parts;
-import com.hxd.fsystemback.entity.Product;
-import com.hxd.fsystemback.entity.Tech;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -19,13 +17,13 @@ public interface PartsMapper {
     @Select("SELECT * FROM parts WHERE name = #{name}")
     Parts findPartsByName(String name);
     @Update("UPDATE parts SET num = #{num} WHERE (id = #{id})")
-    void updatePartNum(Integer id, Integer num);
+    void editPartNum(Integer id, Integer num);
 
     @Update("UPDATE parts SET confirm = #{confirmNum} WHERE (id = #{id})")
-    void updatePartConfirmNum(Integer id, Integer confirmNum);
+    void editPartConfirmNum(Integer id, Integer confirmNum);
 
-    @Insert("INSERT INTO parts (`name`, `standard`, `group`, `note`) VALUES (#{name},#{standard},#{group},#{note})")
-    void addPart(String name, String standard, String group, String note);
+    @Insert("INSERT INTO parts (`id`,`name`, `standard`, `group`, `note`) VALUES (#{id},#{name},#{standard},#{group},#{note})")
+    void addPart(int id,String name, String standard, String group, String note);
 
     @Select("SELECT * FROM parts")
     List<Parts> getAllPart();
@@ -33,7 +31,8 @@ public interface PartsMapper {
     @Select("SELECT * FROM parts WHERE confirm <> 0")
     List<Parts> getConfirmParts();
     @Update("UPDATE parts SET `min` = #{num} WHERE (`id` = #{id});")
-    void setMin(int id, int num);
+    void editMin(int id, int num);
 
-
+    @Update("UPDATE parts SET `lost` = #{lost} WHERE (`id` = #{id});")
+    void editLost(Integer id, int lost);
 }

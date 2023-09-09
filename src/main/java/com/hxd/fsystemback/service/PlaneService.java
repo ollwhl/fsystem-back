@@ -1,5 +1,6 @@
 package com.hxd.fsystemback.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.dao.PartsMapper;
@@ -23,6 +24,8 @@ public class PlaneService {
     ProductMapper productMapper;
     @Resource
     TechMapper techMapper;
+    @Resource
+    LogService logService;
 
     public PageInfo<Product> getPlane(Params params){
         PageHelper.startPage(params.getPageNum(),params.getPageSize());
@@ -30,19 +33,21 @@ public class PlaneService {
         return PageInfo.of(list);
     }
     @Transactional(rollbackFor = TransactionException.class)
-    public void editPlane(Product product){
-        productMapper.addPlane(product.getName(),product.getPlanNum(),product.getPlanDate());
+    public void editPlane(Product product) throws JsonProcessingException {
+        productMapper.editPlane(product.getName(),product.getPlanNum(),product.getPlanDate());
         List<Tech> techList = techMapper.findTechByProductName(product.getName());
         int min;
         for(Tech tech : techList){
             min = (tech.getNum() * product.getPlanNum()) +tech.getPreWarn();
-            partsMapper.setMin(tech.getPartsId(),min);
+            partsMapper.editMin(tech.getPartsId(),min);
         }
+        logService.setLog("修改了 "+product.getName()+" 的计划，计划期限为 "+product.getPlanDate()+" ，计划数量为 "+product.getPlanNum());
     }
     @Transactional(rollbackFor = TransactionException.class)
-    public void delPlane(Product product){
+    public void delPlane(Product product) throws JsonProcessingException {
         product.setPlanNum(0);
         product.setPlanDate(null);
         editPlane(product);
+        logService.setLog("删除了 "+product.getName()+" 的计划");
     }
 }

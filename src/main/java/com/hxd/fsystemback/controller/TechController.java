@@ -1,5 +1,6 @@
 package com.hxd.fsystemback.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.common.Result;
 import com.hxd.fsystemback.entity.*;
@@ -42,13 +43,13 @@ public class TechController {
     }
 
     @PostMapping("/edit")//传入id num
-    public Result editTechParts(@RequestBody Tech tech) throws CustomException {
+    public Result editTechParts(@RequestBody Tech tech) throws CustomException, JsonProcessingException {
         techService.editTechParts(tech);
         return Result.success();
     }
 
     @PostMapping("/delParts")//传入idget
-    public Result delTechParts(@RequestBody Tech tech) throws CustomException {
+    public Result delTechParts(@RequestBody Tech tech) throws CustomException, JsonProcessingException {
         techService.delTechParts(tech);
         return Result.success();
     }

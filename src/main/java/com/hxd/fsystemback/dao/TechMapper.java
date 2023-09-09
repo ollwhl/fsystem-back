@@ -27,4 +27,7 @@ public interface TechMapper {
 
     @Select("SELECT t.*,p.id AS productId,p.name AS productName,p.num AS productNum,p.standard AS productStandard,pt.id AS partsId,pt.name AS partsName,pt.prewarn,pt.num AS partsNum,pt.standard AS partStandard,pt.`group` As partsGroup FROM tech t LEFT JOIN product p ON t.productid = p.id LEFT JOIN parts pt ON t.partsid = pt.id WHERE p.name = #{productName};")
     List<Tech> findTechByProductName(String productName);
+
+    @Select("SELECT t.*,p.id AS productId,p.name AS productName,p.num AS productNum,p.standard AS productStandard,pt.id AS partsId,pt.name AS partsName,pt.prewarn,pt.num AS partsNum,pt.standard AS partStandard,pt.`group` As partsGroup FROM tech t LEFT JOIN product p ON t.productid = p.id LEFT JOIN parts pt ON t.partsid = pt.id WHERE t.id = #{id};")
+    Tech findTechByID(int id);
 }

@@ -9,8 +9,8 @@ public class Tech {
     private String productName;
     private String productStandard;
     private String productNote;
-    private String partsStandard;
     private String partsName;
+    private String partsStandard;
     private Integer num;
     private String partsGroup;
     private int preWarn;

@@ -1,5 +1,6 @@
 package com.hxd.fsystemback.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.common.Result;
 import com.hxd.fsystemback.entity.Params;
@@ -23,12 +24,12 @@ public class PlaneController {
         return Result.success(list);
     }
     @PostMapping("/editPlane")//传入name，planeNum,planeDate
-    public Result editPlane(@RequestBody Product product) throws CustomException {
+    public Result editPlane(@RequestBody Product product) throws CustomException, JsonProcessingException {
         planeService.editPlane(product);
         return Result.success();
     }
     @PostMapping("/delPlane")//传入name
-    public Result delPlane(@RequestBody Product product) throws CustomException {
+    public Result delPlane(@RequestBody Product product) throws CustomException, JsonProcessingException {
         planeService.delPlane(product);
         return Result.success();
     }
