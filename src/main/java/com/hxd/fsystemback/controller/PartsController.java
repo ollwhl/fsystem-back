@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.service.annotation.PostExchange;
 
 import java.io.IOException;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -34,6 +35,11 @@ public class PartsController {
         PageInfo<Parts> list = partsService.getHalfProduct(params);
         return Result.success(list);
     }
+    @GetMapping("/getProduct")
+    Result getProduct(Params params){
+        PageInfo<Product> list = partsService.getProduct(params);
+        return Result.success(list);
+    }
     @GetMapping("/getAllParts")
     Result getAllParts(Params params){
         PageInfo<Parts> list = partsService.getAllParts(params);
@@ -49,6 +55,12 @@ public class PartsController {
     Result findPartsByName(String name) throws CustomException {
         Parts parts = partsService.findPartsByName(name);
         return Result.success(parts);
+    }
+
+    @GetMapping("/getBuyList")
+    Result getBuyList(){
+        List<Parts> list = partsService.getBuyList();
+        return Result.success(list);
     }
     @GetMapping("/search")
    public Result searchPart(Params params){

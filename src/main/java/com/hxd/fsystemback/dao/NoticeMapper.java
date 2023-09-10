@@ -15,6 +15,6 @@ public interface NoticeMapper {
     @Insert("INSERT INTO notice (`msg`,`time`) VALUES (#{msg},#{time})")
     void addNotice(String msg, Date time);
 
-    @Delete("DELETE FROM notice WHERE id = #{id}")
-    void delNotice(int id);
+    @Delete("DELETE FROM notice WHERE title = #{title}")
+    void delNotice(String title);
 }

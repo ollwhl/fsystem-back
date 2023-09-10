@@ -13,5 +13,5 @@ public class Product {
     String note;
     int planNum;
     Date planDate;
-    int produce;
+    int produced;
 }

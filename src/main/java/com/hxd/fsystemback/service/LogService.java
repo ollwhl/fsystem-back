@@ -27,7 +27,7 @@ public class LogService {
     LogMapper logMapper;
 
 
-    public void setLog (String logMsg) throws IOException {
+    public void setLog (String logMsg){
         Date time = new Date();
         String username = "";
         String ip = "";

@@ -10,6 +10,8 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
 
+    @Select("SELECT * FROM product")
+    List<Product> getProduct();
     @Select("SELECT * FROM product WHERE name = #{name}")
     Product findProductByName(String name);
 
@@ -27,5 +29,6 @@ public interface ProductMapper {
 
     @Insert("INSERT INTO product (`id`,`name`, `standard`, `note`) VALUES (#{id},#{name},#{standard},#{note})")
     void addProduct(int id,String name, String standard, String note);
+
 
 }

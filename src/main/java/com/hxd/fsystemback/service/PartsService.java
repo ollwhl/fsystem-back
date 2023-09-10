@@ -49,6 +49,11 @@ public class PartsService {
         List<Parts> list = partsMapper.getAllPart();
         return PageInfo.of(list);
     }
+    public PageInfo<Product> getProduct(Params params) {
+        PageHelper.startPage(params.getPageNum(),params.getPageSize());
+        List<Product> list = productMapper.getProduct();
+        return PageInfo.of(list);
+    }
     public PageInfo<Parts> searchPartByName(Params params){
         PageHelper.startPage(params.getPageNum(), params.getPageSize());
         List<Parts> list=partsMapper.searchPartsByName(params.getKeyword(),JwtTokenUtils.getUserByToken().getGroup());
@@ -70,7 +75,8 @@ public class PartsService {
         return parts;
     }
 
-    public void addParts(Parts parts) throws CustomException, IOException { //传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
+    @Transactional
+    public void addParts(Parts parts) throws CustomException { //传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
         if (StrUtil.isBlank(parts.getName())){
             throw new CustomException("name为空");
         }
@@ -93,7 +99,7 @@ public class PartsService {
 
     }
 
-    @Transactional(rollbackFor = TransactionException.class)
+    @Transactional
     public void countPart(Parts parts) throws CustomException, IOException { //name confirm
         if (StrUtil.isBlank(parts.getName())){
             throw new CustomException("name为空");
@@ -117,15 +123,18 @@ public class PartsService {
         num = thisParts.getNum() + parts.getConfirm();
         partsMapper.editPartNum(thisParts.getId(), num);
     }
+    @Transactional
     public void editPreWarn(Parts parts) throws CustomException {
         if (StrUtil.isBlank(parts.getName())){
             throw new CustomException("name为空");
         }
         partsMapper.editPreWarn(parts.getName(), parts.getPreWarn());
+        logService.setLog("修改了 "+parts.getName()+" 的备件数量为 "+parts.getPreWarn());
     }
 
-    public void getBuyList(){
-        partsMapper.getBuyList();
+    public List<Parts> getBuyList(){
+        return partsMapper.getBuyList();
     }
+
 
 }

@@ -26,37 +26,47 @@ public class FactoryService {
     ProductMapper productMapper;
     @Resource
     TechMapper techMapper;
+
+    @Resource
+    LogService logService;
     public PageInfo<Parts> getConfirmParts(Params params) {
         PageHelper.startPage(params.getPageNum(),params.getPageSize());
         List<Parts> list = partsMapper.getConfirmParts();
         return PageInfo.of(list);
     }
+
+    @Transactional
     public void editLost(Parts parts) throws CustomException {
         if (StrUtil.isBlank(parts.getName())){
             throw new CustomException("name为空");
         }
         partsMapper.editLost(parts.getName(),parts.getLost());
+        logService.setLog("损耗了"+parts.getLost()+"个"+parts.getName());
     }
 
-    @Transactional(rollbackFor = TransactionException.class)
+    @Transactional
     public void dailyCheck(Product product) throws CustomException {
         if (StrUtil.isBlank(product.getName())){
             throw new CustomException("name为空");
         }
-        productMapper.dailyCheck(product.getName(),product.getProduce());
-        List<Tech> techList=techMapper.findTechByProductId(product.getId());
-        Parts parts;
-        for (Tech tech :techList){
-            parts=partsMapper.findPartByID(tech.getPartsId());
-            partsMapper.editPartNum(tech.getPartsId(), parts.getArrive()-(product.getProduce()*tech.getNum()));
-        }
+        Product thisProduct = productMapper.findProductByName(product.getName());
+        productMapper.dailyCheck(product.getName(),product.getProduced()+thisProduct.getProduced());
+//        List<Tech> techList=techMapper.findTechByProductId(product.getId());
+//        Parts parts;
+//        for (Tech tech :techList){
+//            parts=partsMapper.findPartByID(tech.getPartsId());
+//            partsMapper.editMin(parts.getId(), parts.getMin()-tech.getNum()*product.getProduce());
+//        }
+        logService.setLog("填写了生产进度 今日生产了"+product.getProduced()+"个"+product.getName());
     }
 
     //name
+    @Transactional
     public void confirmArrive(String name) throws CustomException {
         if (StrUtil.isBlank(name)){
             throw new CustomException("name为空");
         }
         partsMapper.editPartConfirmNum(name,0);
+        logService.setLog("确认了"+name+"的出库");
     }
 }

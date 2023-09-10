@@ -39,5 +39,5 @@ public interface PartsMapper {
     void editPreWarn(String name, int preWarn);
 
     @Select("SELECT * FROM parts WHERE num < min")
-    void getBuyList();
+    List<Parts> getBuyList();
 }
