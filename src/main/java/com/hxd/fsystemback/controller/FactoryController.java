@@ -22,14 +22,19 @@ public class FactoryController {
         PageInfo<Parts> list = factoryService.getConfirmParts(params);
         return Result.success(list);
     }
-    @GetMapping("editLost")
+    @GetMapping("editLost")//name lost
     public Result editLost(Parts parts){
         factoryService.editLost(parts);
         return Result.success();
     }
-    @GetMapping("dailyCheck")
+    @GetMapping("dailyCheck")//name produce
     public Result dailyCheck(Product product){
         factoryService.dailyCheck(product);
+        return Result.success();
+    }
+    @GetMapping("confirmArrive")//name
+    public Result confirmCheck(String name){
+        factoryService.confirmArrive(name);
         return Result.success();
     }
 }

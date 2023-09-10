@@ -9,18 +9,15 @@ public interface PartsMapper {
     @Select("SELECT * FROM parts where `group` = #{group}")
     public List<Parts> getPart(@Param("group") String group);
 
-    @Select("SELECT * FROM parts WHERE name LIKE #{keyword} AND 'group' = #{group}")
+    @Select("SELECT * FROM product WHERE name LIKE #{%keyword%} AND 'group' = #{group}")
     List<Parts>  searchPartsByName(@Param("keyword")String keyword,@Param("group") String group);
 
     @Select("SELECT * FROM parts WHERE id = #{id}")
     Parts findPartByID(@Param("id")Integer id);
     @Select("SELECT * FROM parts WHERE name = #{name}")
     Parts findPartsByName(String name);
-    @Update("UPDATE parts SET num = #{num} WHERE (id = #{id})")
-    void editPartNum(Integer id, Integer num);
-
     @Update("UPDATE parts SET confirm = #{confirmNum} WHERE (id = #{id})")
-    void editPartConfirmNum(Integer id, Integer confirmNum);
+    void editPartConfirmNum(String name, Integer confirmNum);
 
     @Insert("INSERT INTO parts (`id`,`name`, `standard`, `group`, `note`) VALUES (#{id},#{name},#{standard},#{group},#{note})")
     void addPart(int id,String name, String standard, String group, String note);
@@ -30,9 +27,18 @@ public interface PartsMapper {
 
     @Select("SELECT * FROM parts WHERE confirm <> 0")
     List<Parts> getConfirmParts();
+
+    @Update("UPDATE parts SET num = #{num} WHERE (id = #{id})")
+    void editPartNum(Integer id, Integer num);
     @Update("UPDATE parts SET `min` = #{num} WHERE (`id` = #{id});")
     void editMin(int id, int num);
 
-    @Update("UPDATE parts SET `lost` = #{lost} WHERE (`id` = #{id});")
-    void editLost(Integer id, int lost);
+    @Update("UPDATE parts SET `lost` = #{lost} WHERE (`name` = #{name});")
+    void editLost(String name, int lost);
+
+    @Update("UPDATE parts SET `prewarn` = #{preWarn} WHERE (`name` = #{name});")
+    void editPreWarn(String name, int preWarn);
+
+    @Select("SELECT * FROM parts WHERE num < min")
+    void getBuyList();
 }

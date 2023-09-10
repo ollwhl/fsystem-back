@@ -53,7 +53,7 @@ public class TechController {
         techService.delTechParts(tech);
         return Result.success();
     }
-    @PostMapping("/test")//传入每一条都包含{productName,partsName,num}的List
+    @PostMapping("/test")//{productName,partsName,num}
     public Result test(@RequestBody String[] list) throws CustomException {
         System.out.println(list);
         return Result.success();

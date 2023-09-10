@@ -30,17 +30,21 @@ public class FactoryService {
         return PageInfo.of(list);
     }
     public void editLost(Parts parts){
-        partsMapper.editLost(parts.getId(),parts.getLost());
+        partsMapper.editLost(parts.getName(),parts.getLost());
     }
 
     @Transactional(rollbackFor = TransactionException.class)
     public void dailyCheck(Product product) {
-        productMapper.dailyCheck(product.getId(),product.getProduce());
+        productMapper.dailyCheck(product.getName(),product.getProduce());
         List<Tech> techList=techMapper.findTechByProductId(product.getId());
         Parts parts;
         for (Tech tech :techList){
             parts=partsMapper.findPartByID(tech.getPartsId());
             partsMapper.editPartNum(tech.getPartsId(), parts.getArrive()-(product.getProduce()*tech.getNum()));
         }
+    }
+
+    public void confirmArrive(String name) {
+        partsMapper.editPartConfirmNum(name,0);
     }
 }

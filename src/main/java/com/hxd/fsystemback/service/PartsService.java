@@ -98,14 +98,23 @@ public class PartsService {
         }
         if (parts.getConfirm() < 0) {  //Confirm 为负数时为出库
             Integer confirmNum = thisParts.getConfirm() + parts.getConfirm();
+            Integer min = thisParts.getMin() + parts.getConfirm();
             System.out.println(confirmNum);
-            partsMapper.editPartConfirmNum(thisParts.getId(), confirmNum);
+            partsMapper.editPartConfirmNum(thisParts.getName(), confirmNum);
+            partsMapper.editMin(thisParts.getId(), min);
             logService.setLog("出库了"+(-parts.getConfirm())+"个"+parts.getName()+" id为"+thisParts.getId());
         }else {
             logService.setLog("入库了"+parts.getConfirm()+"个"+parts.getName()+" id为"+thisParts.getId());
         }
         num = thisParts.getNum() + parts.getConfirm();
         partsMapper.editPartNum(thisParts.getId(), num);
+    }
+    public void editPreWarn(Parts parts){
+        partsMapper.editPreWarn(parts.getName(), parts.getPreWarn());
+    }
+
+    public void getBuyList(){
+        partsMapper.getBuyList();
     }
 
 }
