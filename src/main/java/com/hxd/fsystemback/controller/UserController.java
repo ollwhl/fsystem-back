@@ -18,14 +18,19 @@ import java.util.List;
 public class UserController {
     @Resource//从ioc中取出
     UserService userService;
-    @GetMapping("/stuff")
-    public Result getStuff(Params params){
-        PageInfo<User> list = userService.getStuff(params);
-        return Result.success(list);
-    }
-    @GetMapping("/admin")
-    public Result getAdmin(Params params){
-        PageInfo<User> list= userService.getAdmin(params);
+//    @GetMapping("/stuff")
+//    public Result getStuff(Params params){
+//        PageInfo<User> list = userService.getStuff(params);
+//        return Result.success(list);
+//    }
+//    @GetMapping("/admin")
+//    public Result getAdmin(Params params){
+//        PageInfo<User> list= userService.getAdmin(params);
+//        return Result.success(list);
+//    }
+    @GetMapping("")
+    public Result getAllUser(Params params){
+        PageInfo<User> list= userService.getAllUsers(params);
         return Result.success(list);
     }
     @GetMapping("/admin/search")
