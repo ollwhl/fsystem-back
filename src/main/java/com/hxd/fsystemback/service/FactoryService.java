@@ -60,7 +60,7 @@ public class FactoryService {
         logService.setLog("填写了生产进度 今日生产了"+product.getProduced()+"个"+product.getName());
     }
 
-    //name
+    //name test
     @Transactional
     public void confirmArrive(String name) throws CustomException {
         if (StrUtil.isBlank(name)){
