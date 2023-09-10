@@ -25,7 +25,7 @@ public class LogService {
     LogMapper logMapper;
 
 
-    void setLog (String logMsg) throws JsonProcessingException {
+    public void setLog (String logMsg) throws JsonProcessingException {
         Date time = new Date();
         String username = "";
         String ip = "";
@@ -42,7 +42,7 @@ public class LogService {
         logMapper.addLog(username,logMsg,ip,time,json);
     }
 
-    PageInfo<Log> getLog(Params params){
+    public PageInfo<Log> getLog(Params params){
         PageHelper.startPage(params.getPageNum(), params.getPageSize());
         List<Log> list = logMapper.getLog();
         return PageInfo.of(list);
