@@ -16,7 +16,7 @@ public interface ProductMapper {
     @Select("SELECT * FROM product WHERE planNum <> 0")
     List<Product> getPlane();
 
-    @Select("SELECT * FROM parts WHERE name LIKE #{%keyword%} AND 'group' = #{group}")
+    @Select("SELECT * FROM parts WHERE name LIKE %#{keyword}% AND 'group' = #{group}")
     List<Parts>  searchPartsByName(@Param("keyword")String keyword, @Param("group") String group);
 
     @Update("UPDATE product SET plannum = #{planeNum}, plandate = #{planeDate} WHERE (`name` = #{productName});")
