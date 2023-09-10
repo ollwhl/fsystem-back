@@ -1,5 +1,6 @@
 package com.hxd.fsystemback.service;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -15,6 +16,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 @Service
 public class PartsService {
@@ -68,7 +70,10 @@ public class PartsService {
         return parts;
     }
 
-    public void addParts(Parts parts) throws CustomException, JsonProcessingException {
+    public void addParts(Parts parts) throws CustomException, IOException { //传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
+        if (StrUtil.isBlank(parts.getName())){
+            throw new CustomException("name为空");
+        }
         if (parts.getGroup() == null){
             Product product = productMapper.findProductByName(parts.getName());
             //System.out.println(product);
@@ -89,7 +94,10 @@ public class PartsService {
     }
 
     @Transactional(rollbackFor = TransactionException.class)
-    public void countPart(Parts parts) throws CustomException, JsonProcessingException {
+    public void countPart(Parts parts) throws CustomException, IOException { //name confirm
+        if (StrUtil.isBlank(parts.getName())){
+            throw new CustomException("name为空");
+        }
         Integer num;
         Parts thisParts = partsMapper.findPartsByName(parts.getName());
         //System.out.println(thisParts);
@@ -109,7 +117,10 @@ public class PartsService {
         num = thisParts.getNum() + parts.getConfirm();
         partsMapper.editPartNum(thisParts.getId(), num);
     }
-    public void editPreWarn(Parts parts){
+    public void editPreWarn(Parts parts) throws CustomException {
+        if (StrUtil.isBlank(parts.getName())){
+            throw new CustomException("name为空");
+        }
         partsMapper.editPreWarn(parts.getName(), parts.getPreWarn());
     }
 

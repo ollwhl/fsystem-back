@@ -15,6 +15,8 @@ import com.hxd.fsystemback.exception.TransactionException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -63,13 +65,13 @@ public class TechService {
 //            techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
 //        }
 //    }
-    public void editTechParts(Tech tech) throws JsonProcessingException {
+    public void editTechParts(Tech tech) throws IOException {
 
         techMapper.editTechParts(tech.getId(),tech.getNum());
         Tech thisTech = techMapper.findTechByID(tech.getId());
         logService.setLog("修改了 "+thisTech.getProductName()+" 的产品构成中的 "+thisTech.getPartsName()+" 的数量为 "+thisTech.getNum());
     }
-    public void delTechParts(Tech tech) throws JsonProcessingException {
+    public void delTechParts(Tech tech) throws IOException {
         techMapper.delTechParts(tech.getId());
         Tech thisTech = techMapper.findTechByID(tech.getId());
         logService.setLog("删除了 "+thisTech.getProductName()+" 的产品构成中的 "+thisTech.getPartsName());

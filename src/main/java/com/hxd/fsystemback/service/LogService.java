@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class LogService {
     LogMapper logMapper;
 
 
-    public void setLog (String logMsg) throws JsonProcessingException {
+    public void setLog (String logMsg) throws IOException {
         Date time = new Date();
         String username = "";
         String ip = "";
@@ -36,10 +38,9 @@ public class LogService {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         ip = request.getRemoteAddr();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(request);
+        //String json = readJsonPayload(request);
 
-        logMapper.addLog(username,logMsg,ip,time,json);
+        logMapper.addLog(username,logMsg,ip,time);
     }
 
     public PageInfo<Log> getLog(Params params){
@@ -55,4 +56,24 @@ public class LogService {
         return PageInfo.of(list);
 
     }
+//    private String readJsonPayload(HttpServletRequest request) throws IOException {
+//        StringBuilder stringBuilder = new StringBuilder();
+//        BufferedReader bufferedReader = null;
+//
+//        try {
+//            bufferedReader = request.getReader();
+//            char[] charBuffer = new char[128];
+//            int bytesRead;
+//
+//            while ((bytesRead = bufferedReader.read(charBuffer)) != -1) {
+//                stringBuilder.append(charBuffer, 0, bytesRead);
+//            }
+//        } finally {
+//            if (bufferedReader != null) {
+//                bufferedReader.close();
+//            }
+//        }
+//
+//        return stringBuilder.toString();
+//    }
 }

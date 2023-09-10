@@ -4,6 +4,7 @@ import com.hxd.fsystemback.entity.Parts;
 import com.hxd.fsystemback.entity.Product;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -19,7 +20,7 @@ public interface ProductMapper {
     List<Parts>  searchPartsByName(@Param("keyword")String keyword, @Param("group") String group);
 
     @Update("UPDATE product SET plannum = #{planeNum}, plandate = #{planeDate} WHERE (`name` = #{productName});")
-    void editPlane(String productName, int planeNum, String planeDate);
+    void editPlane(String productName, int planeNum, Date planeDate);
 
     @Update("UPDATE product SET `produce` = #{produce} WHERE (`id` = #{id});")
     void dailyCheck(String name, int produce);

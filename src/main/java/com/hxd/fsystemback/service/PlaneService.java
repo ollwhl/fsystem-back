@@ -1,5 +1,6 @@
 package com.hxd.fsystemback.service;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -9,11 +10,13 @@ import com.hxd.fsystemback.dao.TechMapper;
 import com.hxd.fsystemback.entity.Params;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.entity.Tech;
+import com.hxd.fsystemback.exception.CustomException;
 import com.hxd.fsystemback.exception.TransactionException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -33,7 +36,10 @@ public class PlaneService {
         return PageInfo.of(list);
     }
     @Transactional(rollbackFor = TransactionException.class)
-    public void editPlane(Product product) throws JsonProcessingException {
+    public void editPlane(Product product) throws IOException, CustomException { //name，planeNum,planeDate
+        if (StrUtil.isBlank(product.getName())){
+            throw new CustomException("name为空");
+        }
         productMapper.editPlane(product.getName(),product.getPlanNum(),product.getPlanDate());
         List<Tech> techList = techMapper.findTechByProductName(product.getName());
         int min;
@@ -44,7 +50,10 @@ public class PlaneService {
         logService.setLog("修改了 "+product.getName()+" 的计划，计划期限为 "+product.getPlanDate()+" ，计划数量为 "+product.getPlanNum());
     }
     @Transactional(rollbackFor = TransactionException.class)
-    public void delPlane(Product product) throws JsonProcessingException {
+    public void delPlane(Product product) throws IOException, CustomException {//name
+        if (StrUtil.isBlank(product.getName())){
+            throw new CustomException("name为空");
+        }
         product.setPlanNum(0);
         product.setPlanDate(null);
         editPlane(product);

@@ -22,6 +22,7 @@ public class NoticeService {
         return PageInfo.of(list);
     }
 
+    //传入msg
     public void addNotice (Notice notice){
         Date time=new Date();
         noticeMapper.addNotice(notice.getMsg(),time);

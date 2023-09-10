@@ -13,6 +13,8 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.service.annotation.PostExchange;
 
+import java.io.IOException;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/parts")
@@ -55,7 +57,7 @@ public class PartsController {
     }
 
     @PostMapping("/count")//传入零件的name和confirm
-    public Result countPart(@RequestBody Parts parts) throws CustomException, JsonProcessingException {
+    public Result countPart(@RequestBody Parts parts) throws CustomException, IOException {
         //System.out.println(parts);
         partsService.countPart(parts);
 
@@ -63,7 +65,7 @@ public class PartsController {
     }
 
     @PostMapping("/addParts")//传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
-    public Result addParts(@RequestBody Parts parts) throws CustomException, JsonProcessingException {
+    public Result addParts(@RequestBody Parts parts) throws CustomException, IOException {
         partsService.addParts(parts);
         return Result.success();
     }

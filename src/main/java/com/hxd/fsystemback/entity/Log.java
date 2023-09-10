@@ -10,5 +10,5 @@ public class Log {
     private Date time;
     private String userName;
     private String ip;
-    private String json;
+    //private String json;
 }

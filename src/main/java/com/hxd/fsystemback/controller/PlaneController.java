@@ -10,6 +10,8 @@ import com.hxd.fsystemback.service.PlaneService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/plan")
@@ -24,12 +26,13 @@ public class PlaneController {
         return Result.success(list);
     }
     @PostMapping("/editPlan")//传入name，planeNum,planeDate
-    public Result editPlane(@RequestBody Product product) throws CustomException, JsonProcessingException {
+    public Result editPlane(@RequestBody Product product) throws CustomException, IOException {
+        System.out.println(product);
         planeService.editPlane(product);
         return Result.success();
     }
     @PostMapping("/delPlan")//传入name
-    public Result delPlane(@RequestBody Product product) throws CustomException, JsonProcessingException {
+    public Result delPlane(@RequestBody Product product) throws CustomException, IOException {
         planeService.delPlane(product);
         return Result.success();
     }

@@ -2,6 +2,8 @@ package com.hxd.fsystemback.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class Product {
     int id;
@@ -10,6 +12,6 @@ public class Product {
     String standard;
     String note;
     int planNum;
-    String planDate;
+    Date planDate;
     int produce;
 }

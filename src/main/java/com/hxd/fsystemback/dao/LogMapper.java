@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper
 public interface LogMapper {
 
-    @Insert("INSERT INTO log (``,`name`, `standard`, `note`) VALUES (#{name},#{standard},#{note})")
-    void addLog(String username, String userMsg, String ip, Date time,String json);
+    @Insert("INSERT INTO log (`username`,`logmsg`, `time`, `ip`) VALUES (#{userName},#{logMsg},#{time},#{ip})")
+    void addLog(String userName, String logMsg, String ip, Date time);
 
     @Select("SELECT * FROM log")
     List<Log> getLog();

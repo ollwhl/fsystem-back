@@ -9,6 +9,7 @@ import com.hxd.fsystemback.service.TechService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin
@@ -43,13 +44,13 @@ public class TechController {
     }
 
     @PostMapping("/edit")//传入id num
-    public Result editTechParts(@RequestBody Tech tech) throws CustomException, JsonProcessingException {
+    public Result editTechParts(@RequestBody Tech tech) throws CustomException, IOException {
         techService.editTechParts(tech);
         return Result.success();
     }
 
-    @PostMapping("/delParts")//传入idget
-    public Result delTechParts(@RequestBody Tech tech) throws CustomException, JsonProcessingException {
+    @PostMapping("/delParts")//传入id
+    public Result delTechParts(@RequestBody Tech tech) throws CustomException, IOException {
         techService.delTechParts(tech);
         return Result.success();
     }
