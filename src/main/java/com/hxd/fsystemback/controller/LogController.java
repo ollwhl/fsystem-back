@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/factory")
+@RequestMapping("/log")
 public class LogController {
     @Resource
     LogService logService;
