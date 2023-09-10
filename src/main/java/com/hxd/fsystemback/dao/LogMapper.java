@@ -15,4 +15,7 @@ public interface LogMapper {
 
     @Select("SELECT * FROM log")
     List<Log> getLog();
+
+    @Select("SELECT * FROM log LIKE #{keyword}")
+    List<Log> searchLog(String keyword);
 }
