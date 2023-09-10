@@ -51,8 +51,8 @@ public class LogService {
     }
     void searchLog(Params params){
         PageHelper.startPage(params.getPageNum(), params.getPageSize());
-        List<Log> list = logMapper.searchLog();
-        return PageInfo.of(list)
+        List<Log> list = logMapper.searchLog(params.keyword);
+        return PageInfo.of(list);
 
     }
 }
