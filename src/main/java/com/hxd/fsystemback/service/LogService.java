@@ -41,11 +41,18 @@ public class LogService {
 
         logMapper.addLog(username,logMsg,ip,time,json);
     }
+
     PageInfo<Log> getLog(Params params){
         PageHelper.startPage(params.getPageNum(), params.getPageSize());
         List<Log> list = logMapper.getLog();
         return PageInfo.of(list);
 
+
+    }
+    void searchLog(Params params){
+        PageHelper.startPage(params.getPageNum(), params.getPageSize());
+        List<Log> list = logMapper.searchLog();
+        return PageInfo.of(list)
 
     }
 }
