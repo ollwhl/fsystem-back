@@ -20,12 +20,13 @@ public class NoticeController {
         return Result.success(list);
     }
     @PostMapping("addNotice")
-    Result addNotice(Notice notice){
+    Result addNotice(@RequestBody Notice notice){
+        System.out.println(notice);
         noticeService.addNotice(notice);
         return Result.success();
     }
     @PostMapping("delNotice")
-    Result delNotice(Notice notice){
+    Result delNotice(@RequestBody Notice notice){
         noticeService.delNotice(notice);
         return Result.success();
     }

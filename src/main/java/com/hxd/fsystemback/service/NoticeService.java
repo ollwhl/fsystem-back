@@ -31,7 +31,7 @@ public class NoticeService {
     @Transactional
     public void addNotice (Notice notice){
         Date time=new Date();
-        noticeMapper.addNotice(notice.getMsg(),time);
+        noticeMapper.addNotice(notice.getTitle(), notice.getMsg(),time);
         logService.setLog("发布了系统公告 标题为"+notice.getTitle()+"内容为"+notice.getMsg());
     }
 

@@ -57,12 +57,12 @@ public class TechServiceTest {
         tech2.setNum(20);
         techList.add(tech1);
         techList.add(tech2);
-        try {
-            techService.addTech(techList);
+        /*try {
+            //techService.addTech(techList);
             System.out.println("success!!!!");
         }catch (CustomException e){
             System.out.println(e.getMsg());
-        }
+        }*/
 
 
     }

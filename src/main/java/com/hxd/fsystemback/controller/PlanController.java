@@ -6,7 +6,8 @@ import com.hxd.fsystemback.common.Result;
 import com.hxd.fsystemback.entity.Params;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.exception.CustomException;
-import com.hxd.fsystemback.service.PlaneService;
+import com.hxd.fsystemback.service.PlanService;
+
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,9 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/plan")
 
-public class PlaneController {
+public class PlanController {//plane是写后端的人写的不关我前端的事
     @Resource
-    PlaneService planeService;
+    PlanService planeService;
 
     @GetMapping("/getPlan")
     public Result getPlane(Params params){

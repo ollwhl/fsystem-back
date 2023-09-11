@@ -16,7 +16,7 @@ public interface UserMapper {
     List<User> getStuff();
     @Select("SELECT * FROM user WHERE `group` = '1'")
     List<User> getAdmin();
-    @Select("SELECT * FROM user WHERE name LIKE CONCAT('%', #{keyword}, '%') OR phone Like %#{keyword}%")
+    @Select("SELECT * FROM user WHERE name LIKE %#{keyword}% OR phone Like %#{keyword}%")
     List<User> getUsersByName(@Param("keyword") String keyword);
     @Select("SELECT * FROM user WHERE name = #{name}")
     User findUserByName(@Param("name") String name);

@@ -12,8 +12,8 @@ import java.util.List;
 public interface NoticeMapper {
     @Select("SELECT * FROM notice")
     List<Notice> getNotice();
-    @Insert("INSERT INTO notice (`msg`,`time`) VALUES (#{msg},#{time})")
-    void addNotice(String msg, Date time);
+    @Insert("INSERT INTO notice (`title`,`msg`,`time`) VALUES (#{title},#{msg},#{time})")
+    void addNotice(String title,String msg, Date time);
 
     @Delete("DELETE FROM notice WHERE title = #{title}")
     void delNotice(String title);
