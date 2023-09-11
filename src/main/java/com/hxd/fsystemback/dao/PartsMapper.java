@@ -15,7 +15,7 @@ public interface PartsMapper {
     Parts findPartByID(@Param("id")Integer id);
     @Select("SELECT * FROM parts WHERE name = #{name}")
     Parts findPartsByName(String name);
-    @Update("UPDATE parts SET confirm = #{confirmNum} WHERE (id = #{id})")
+    @Update("UPDATE parts SET confirm = #{confirmNum} WHERE (name = #{name})")
     void editPartConfirmNum(String name, Integer confirmNum);
 
     @Insert("INSERT INTO parts (`id`,`name`, `standard`, `group`, `note`) VALUES (#{id},#{name},#{standard},#{group},#{note})")

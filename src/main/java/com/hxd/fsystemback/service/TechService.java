@@ -27,9 +27,9 @@ public class TechService {
     PartsMapper partsMapper;
     @Resource
     ProductMapper productMapper;
-
     @Resource
     LogService logService;
+
 
     public PageInfo<Tech> getProductTech(Params params) {
         PageHelper.startPage(params.getPageNum(),params.getPageSize());
@@ -104,4 +104,5 @@ public class TechService {
         }
         techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
     }
+
 }

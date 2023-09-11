@@ -28,6 +28,7 @@ public class UserController {
 //        PageInfo<User> list= userService.getAdmin(params);
 //        return Result.success(list);
 //    }
+
     @GetMapping("")
     public Result getAllUser(Params params){
         PageInfo<User> list= userService.getAllUsers(params);

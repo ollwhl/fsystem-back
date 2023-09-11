@@ -1,8 +1,6 @@
 package com.hxd.fsystemback.service;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.common.JwtTokenUtils;
@@ -16,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.net.InetAddress;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +34,11 @@ public class LogService {
             username =user.getName();
         }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        ip = request.getRemoteAddr();
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
 
         //String json = readJsonPayload(request);
 
@@ -55,6 +57,34 @@ public class LogService {
         List<Log> list = logMapper.searchLog(params.getKeyword());
         return PageInfo.of(list);
 
+    }
+
+    private String ipv6ToIpv4(String ipv6){
+        try {
+            // 获取IPv6地址
+            InetAddress ip = InetAddress.getByName("IPv6地址");
+
+            // 判断IPv6地址是否合法
+//            boolean isIPv6 = ip.is;
+//
+//            if (!isIPv6) {
+//                System.out.println("输入的不是一个合法的IPv6地址");
+//                return;
+//            }
+
+            // 将IPv6地址转换为字节数组
+            byte[] ipBytes = ip.getAddress();
+
+            // 将字节数组转换为IPv4地址
+            byte[] ipv4Bytes = Arrays.copyOfRange(ipBytes, 12, 16);
+
+            // 输出IPv4地址
+            String ipv4 = InetAddress.getByAddress(ipv4Bytes).getHostAddress();
+            return ipv4;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ipv6;
+        }
     }
 //    private String readJsonPayload(HttpServletRequest request) throws IOException {
 //        StringBuilder stringBuilder = new StringBuilder();
