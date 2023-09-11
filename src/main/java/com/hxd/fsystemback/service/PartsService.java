@@ -93,8 +93,8 @@ public class PartsService {
             if (partsMapper.findPartsByName(parts.getName()) != null){
                 throw new CustomException("parts already exist");
             }
-            partsMapper.addPart(parts.getId(), parts.getName(),parts.getStandard(),parts.getGroup(),parts.getNote());
-            logService.setLog("添加了零件（id："+parts.getId()+"）（名字："+parts.getName()+") （仓库："+parts.getGroup()+"）（规格："+parts.getStandard()+"）（描述："+parts.getNote()+")");
+            partsMapper.addPart(parts.getId(), parts.getName(),parts.getStandard(),parts.getGroup(),parts.getNote(), parts.getPreWarn());
+            logService.setLog("添加了零件（id："+parts.getId()+"）（名字："+parts.getName()+") （仓库："+parts.getGroup()+"）（规格："+parts.getStandard()+"）（描述："+parts.getNote()+")（备件："+parts.getPreWarn()+")");
         }
 
     }

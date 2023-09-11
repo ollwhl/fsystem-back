@@ -18,8 +18,8 @@ public interface PartsMapper {
     @Update("UPDATE parts SET confirm = #{confirmNum} WHERE (name = #{name})")
     void editPartConfirmNum(String name, Integer confirmNum);
 
-    @Insert("INSERT INTO parts (`id`,`name`, `standard`, `group`, `note`) VALUES (#{id},#{name},#{standard},#{group},#{note})")
-    void addPart(int id,String name, String standard, String group, String note);
+    @Insert("INSERT INTO parts (`id`,`name`, `standard`, `group`, `note` , `preWarn`) VALUES (#{id},#{name},#{standard},#{group},#{note},#{preWarn})")
+    void addPart(int id,String name, String standard, String group, String note,int preWarn);
 
     @Select("SELECT * FROM parts")
     List<Parts> getAllPart();

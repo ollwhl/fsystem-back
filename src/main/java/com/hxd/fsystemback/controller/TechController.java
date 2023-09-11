@@ -44,7 +44,7 @@ public class TechController {
     }
 
     @PostMapping("/edit")//传入id num
-    public Result editTechParts(@RequestBody Tech tech) throws CustomException, IOException {
+    public Result editTechParts(@RequestBody Tech tech) throws CustomException {
         techService.editTechParts(tech);
         return Result.success();
     }

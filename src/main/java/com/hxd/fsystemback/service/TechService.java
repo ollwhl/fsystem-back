@@ -65,12 +65,20 @@ public class TechService {
 //            techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
 //        }
 //    }
-    public void editTechParts(Tech tech) throws IOException {
+    @Transactional
+    public void editTechParts(Tech tech) throws CustomException {
 
-        techMapper.editTechParts(tech.getId(),tech.getNum());
         Tech thisTech = techMapper.findTechByID(tech.getId());
+        if (thisTech == null){
+            throw new CustomException("Tec not exist");
+        }
+        if(tech.getPreWarn()>0){
+            partsMapper.editLost(thisTech.getPartsName(),tech.getPreWarn());
+        }
+        techMapper.editTechParts(tech.getId(),tech.getNum());
         logService.setLog("修改了 "+thisTech.getProductName()+" 的产品构成中的 "+thisTech.getPartsName()+" 的数量为 "+thisTech.getNum());
     }
+    @Transactional
     public void delTechParts(Tech tech) throws IOException {
         techMapper.delTechParts(tech.getId());
         Tech thisTech = techMapper.findTechByID(tech.getId());
@@ -78,6 +86,7 @@ public class TechService {
     }
 
 
+    @Transactional
     public void addTechRow(Tech tech) throws CustomException {
         String productName = tech.getProductName();
         String partsName;

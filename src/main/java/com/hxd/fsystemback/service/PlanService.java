@@ -35,7 +35,7 @@ public class PlanService {
         List<Product> list=productMapper.getPlane();
         return PageInfo.of(list);
     }
-    @Transactional(rollbackFor = TransactionException.class)
+    @Transactional
     public void editPlane(Product product) throws IOException, CustomException { //name，planeNum,planeDate
         if (StrUtil.isBlank(product.getName())){
             throw new CustomException("name为空");
@@ -49,7 +49,7 @@ public class PlanService {
         }
         logService.setLog("修改了 "+product.getName()+" 的计划，计划期限为 "+product.getPlanDate()+" ，计划数量为 "+product.getPlanNum());
     }
-    @Transactional(rollbackFor = TransactionException.class)
+    @Transactional
     public void delPlane(Product product) throws IOException, CustomException {//name
         if (StrUtil.isBlank(product.getName())){
             throw new CustomException("name为空");
