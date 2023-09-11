@@ -73,7 +73,7 @@ public class TechService {
             throw new CustomException("Tec not exist");
         }
         if(tech.getPreWarn()>0){
-            partsMapper.editLost(thisTech.getPartsName(),tech.getPreWarn());
+            partsMapper.editPreWarn(thisTech.getPartsName(),tech.getPreWarn());
         }
         techMapper.editTechParts(tech.getId(),tech.getNum());
         logService.setLog("修改了 "+thisTech.getProductName()+" 的产品构成中的 "+thisTech.getPartsName()+" 的数量为 "+thisTech.getNum());

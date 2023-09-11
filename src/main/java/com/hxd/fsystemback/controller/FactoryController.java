@@ -23,18 +23,18 @@ public class FactoryController {
         PageInfo<Parts> list = factoryService.getConfirmParts(params);
         return Result.success(list);
     }
-    @GetMapping("editLost")//name lost
-    public Result editLost(Parts parts) throws CustomException {
+    @PostMapping("editLost")//name lost
+    public Result editLost(@RequestBody Parts parts) throws CustomException {
         factoryService.editLost(parts);
         return Result.success();
     }
-    @GetMapping("dailyCheck")//name produce
-    public Result dailyCheck(Product product) throws CustomException {
+    @PostMapping("dailyCheck")//name produce
+    public Result dailyCheck(@RequestBody Product product) throws CustomException {
         factoryService.dailyCheck(product);
         return Result.success();
     }
-    @GetMapping("confirmArrive")//name
-    public Result confirmCheck(String name) throws CustomException {
+    @PostMapping("confirmArrive")//name
+    public Result confirmCheck(@RequestBody String name) throws CustomException {
         factoryService.confirmArrive(name);
         return Result.success();
     }
