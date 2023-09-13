@@ -41,6 +41,12 @@ public class TechService {
         List<Tech> list = techMapper.searchTechByProductName(params.getKeyword());
         return PageInfo.of(list);
     }
+
+    public PageInfo<Tech> getTechByWithPlan(Params params) {
+        PageHelper.startPage(params.getPageNum(),params.getPageSize());
+        List<Tech> list = techMapper.getTechWithPlan();
+        return PageInfo.of(list);
+    }
 //    @Transactional(rollbackFor = TransactionException.class)
 //    public void addTech(List<Tech> techList) throws CustomException {
 //        String productName = techList.get(0).getProductName();

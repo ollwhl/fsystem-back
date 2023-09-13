@@ -33,4 +33,9 @@ public interface ProductMapper {
     @Select("SELECT * FROM product WHERE name LIKE CONCAT('%', #{keyword}, '%')")
     List<Product> searchProductByName(String keyword);
 
+    @Update("UPDATE product SET `productconfirm` = #{productConfirm} WHERE (`name` = #{name});")
+    void editProductConfirmNum(String name, int productConfirm);
+
+    @Update("UPDATE product SET `num` = #{num} WHERE (`name` = #{name});")
+    void editProductNum(String name, int num);
 }

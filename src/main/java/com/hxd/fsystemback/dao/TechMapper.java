@@ -9,15 +9,22 @@ import java.util.List;
 public interface TechMapper {
 
     @Select("SELECT t.*,\n" +
-            "\tp.plandate,\n" +
+            "    p.plandate,\n" +
             "    p.plannum,\n" +
             "    p.produced,\n" +
             "    p.name AS productname,\n" +
             "    p.standard AS productstandard,\n" +
-            "    pt.prewarn,p.note AS productnote,\n" +
+            "    p.num AS productnum,\n" +
+            "    p.productconfirm,\n" +
+            "    p.note AS productnote,\n" +
+            "    pt.prewarn,\n" +
             "    pt.name AS partsname,\n" +
             "    pt.standard AS partsstandard,\n" +
-            "    pt.`group` As partsGroup\n" +
+            "    pt.`group` As partsGroup,\n" +
+            "    pt.num AS partsnum,\n" +
+            "    pt.confirm AS partconfirm,\n" +
+            "    pt.lost,\n" +
+            "    pt.min\n" +
             "FROM tech AS t \n" +
             "LEFT JOIN product p ON t.productid = p.id \n" +
             "LEFT JOIN parts pt ON t.partsid = pt.id \n" +
@@ -35,12 +42,99 @@ public interface TechMapper {
     @Delete("DELETE FROM tech WHERE (id = #{id})")
     void delTechParts(Integer id);
 
-    @Select("SELECT t.*,p.id AS productId,p.name AS productName,p.num AS productNum,p.standard AS productStandard,pt.id AS partsId,pt.name AS partsName,pt.num AS partsNum,pt.standard AS partStandard,pt.`group` As partsGroup FROM tech t LEFT JOIN product p ON t.productid = p.id LEFT JOIN parts pt ON t.partsid = pt.id WHERE p.name LIKE #{keyword};")
+    @Select("SELECT t.*,\n" +
+            "    p.plandate,\n" +
+            "    p.plannum,\n" +
+            "    p.produced,\n" +
+            "    p.name AS productname,\n" +
+            "    p.standard AS productstandard,\n" +
+            "    p.num AS productnum,\n" +
+            "    p.productconfirm,\n" +
+            "    p.note AS productnote,\n" +
+            "    pt.prewarn,\n" +
+            "    pt.name AS partsname,\n" +
+            "    pt.standard AS partsstandard,\n" +
+            "    pt.`group` As partsGroup,\n" +
+            "    pt.num AS partsnum,\n" +
+            "    pt.confirm AS partconfirm,\n" +
+            "    pt.lost,\n" +
+            "    pt.min \n" +
+            "FROM tech AS t \n" +
+            "LEFT JOIN product p ON t.productid = p.id \n" +
+            "LEFT JOIN parts pt ON t.partsid = pt.id \n" +
+            "WHERE pt.name LIKE CONCAT('%', #{keyword}, '%') \n"+
+            "OR p.name LIKE CONCAT('%', #{keyword}, '%') \n" +
+            "ORDER BY p.name ASC")
     List<Tech> searchTechByProductName(String keyword);
 
-    @Select("SELECT t.*,p.id AS productId,p.name AS productName,p.num AS productNum,p.standard AS productStandard,pt.id AS partsId,pt.name AS partsName,pt.prewarn,pt.num AS partsNum,pt.standard AS partStandard,pt.`group` As partsGroup FROM tech t LEFT JOIN product p ON t.productid = p.id LEFT JOIN parts pt ON t.partsid = pt.id WHERE p.name = #{productName};")
+    @Select("SELECT t.*,\n" +
+            "    p.plandate,\n" +
+            "    p.plannum,\n" +
+            "    p.produced,\n" +
+            "    p.name AS productname,\n" +
+            "    p.standard AS productstandard,\n" +
+            "    p.num AS productnum,\n" +
+            "    p.productconfirm,\n" +
+            "    p.note AS productnote,\n" +
+            "    pt.prewarn,\n" +
+            "    pt.name AS partsname,\n" +
+            "    pt.standard AS partsstandard,\n" +
+            "    pt.`group` As partsGroup,\n" +
+            "    pt.num AS partsnum,\n" +
+            "    pt.confirm AS partconfirm,\n" +
+            "    pt.lost,\n" +
+            "    pt.min\n" +
+            "FROM tech AS t \n" +
+            "LEFT JOIN product p ON t.productid = p.id \n" +
+            "LEFT JOIN parts pt ON t.partsid = pt.id \n" +
+            "WHERE p.name =#{productname} \n")
     List<Tech> findTechByProductName(String productName);
 
-    @Select("SELECT t.*,p.id AS productId,p.name AS productName,p.num AS productNum,p.standard AS productStandard,pt.id AS partsId,pt.name AS partsName,pt.prewarn,pt.num AS partsNum,pt.standard AS partStandard,pt.`group` As partsGroup FROM tech t LEFT JOIN product p ON t.productid = p.id LEFT JOIN parts pt ON t.partsid = pt.id WHERE t.id = #{id};")
+    @Select("SELECT t.*,\n" +
+            "    p.plandate,\n" +
+            "    p.plannum,\n" +
+            "    p.produced,\n" +
+            "    p.name AS productname,\n" +
+            "    p.standard AS productstandard,\n" +
+            "    p.num AS productnum,\n" +
+            "    p.productconfirm,\n" +
+            "    p.note AS productnote,\n" +
+            "    pt.prewarn,\n" +
+            "    pt.name AS partsname,\n" +
+            "    pt.standard AS partsstandard,\n" +
+            "    pt.`group` As partsGroup,\n" +
+            "    pt.num AS partsnum,\n" +
+            "    pt.confirm AS partconfirm,\n" +
+            "    pt.lost,\n" +
+            "    pt.min\n" +
+            "FROM tech AS t \n" +
+            "LEFT JOIN product p ON t.productid = p.id \n" +
+            "LEFT JOIN parts pt ON t.partsid = pt.id \n" +
+            "WHERE t.id =  #{id}\n")
     Tech findTechByID(int id);
+
+    @Select("SELECT t.*,\n" +
+            "    p.plandate,\n" +
+            "    p.plannum,\n" +
+            "    p.produced,\n" +
+            "    p.name AS productname,\n" +
+            "    p.standard AS productstandard,\n" +
+            "    p.num AS productnum,\n" +
+            "    p.productconfirm,\n" +
+            "    p.note AS productnote,\n" +
+            "    pt.prewarn,\n" +
+            "    pt.name AS partsname,\n" +
+            "    pt.standard AS partsstandard,\n" +
+            "    pt.`group` As partsGroup,\n" +
+            "    pt.num AS partsnum,\n" +
+            "    pt.confirm AS partconfirm,\n" +
+            "    pt.lost,\n" +
+            "    pt.min\n" +
+            "FROM tech AS t \n" +
+            "LEFT JOIN product p ON t.productid = p.id \n" +
+            "LEFT JOIN parts pt ON t.partsid = pt.id \n" +
+            "WHERE p.plannum <> 0 \n" +
+            "ORDER BY p.name ASC")
+    List<Tech> getTechWithPlan();
+
 }

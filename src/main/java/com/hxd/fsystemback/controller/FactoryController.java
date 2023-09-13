@@ -7,7 +7,6 @@ import com.hxd.fsystemback.entity.Parts;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.exception.CustomException;
 import com.hxd.fsystemback.service.FactoryService;
-import com.hxd.fsystemback.service.PartsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +32,22 @@ public class FactoryController {
         factoryService.dailyCheck(product);
         return Result.success();
     }
-    @PostMapping("confirmArrive")//name
-    public Result confirmCheck(@RequestBody String name) throws CustomException {
-        factoryService.confirmArrive(name);
+    @PostMapping("confirmParts")//name
+    public Result confirmParts(@RequestBody Parts parts) throws CustomException {
+        factoryService.confirmParts(parts);
         return Result.success();
     }
+
+    @PostMapping("confirmProduct")//name
+    public Result confirmProduct(@RequestBody Product product) throws CustomException {
+        factoryService.confirmProduct(product);
+        return Result.success();
+    }
+
+    @PostMapping("reduce")//name
+    public Result reduceProduct(@RequestBody Product product) throws CustomException {
+        factoryService.reduceProduct(product);
+        return Result.success();
+    }
+
 }

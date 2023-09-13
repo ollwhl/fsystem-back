@@ -50,6 +50,7 @@ public class FactoryService {
         }
         Product thisProduct = productMapper.findProductByName(product.getName());
         productMapper.editProduced(product.getName(),product.getProduced()+thisProduct.getProduced());
+        productMapper.editProductConfirmNum(product.getName(),thisProduct.getProductConfirm()+product.getProduced());
 //        List<Tech> techList=techMapper.findTechByProductId(product.getId());
 //        Parts parts;
 //        for (Tech tech :techList){
@@ -61,11 +62,33 @@ public class FactoryService {
 
     //name
     @Transactional
-    public void confirmArrive(String name) throws CustomException {
-        if (StrUtil.isBlank(name)){
+    public void confirmParts(Parts parts) throws CustomException {
+        if (StrUtil.isBlank(parts.getName())){
             throw new CustomException("name为空");
         }
-        partsMapper.editPartConfirmNum(name,0);
-        logService.setLog("确认了"+name+"的出库");
+        partsMapper.editPartConfirmNum(parts.getName(), 0);
+        logService.setLog("确认了"+parts.getName()+"的入库");
+    }
+
+    //name
+    @Transactional
+    public void confirmProduct(Product product) throws CustomException {
+        if (StrUtil.isBlank(product.getName())){
+            throw new CustomException("name为空");
+        }
+        Product thisProduct = productMapper.findProductByName(product.getName());
+        productMapper.editProductNum(product.getName(), thisProduct.getNum()+thisProduct.getProductConfirm());
+        productMapper.editProductConfirmNum(product.getName(),0);
+        logService.setLog("确认了"+product.getName()+"的入库");
+    }
+
+    //name num
+    @Transactional
+    public void reduceProduct(Product product) throws CustomException {
+        if (StrUtil.isBlank(product.getName())){
+            throw new CustomException("name为空");
+        }
+        Product thisProduct=productMapper.findProductByName(product.getName());
+        productMapper.editProductNum(product.getName(),thisProduct.getNum()- product.getNum());
     }
 }

@@ -25,6 +25,12 @@ public class TechController {
         PageInfo<Tech> list = techService.getProductTech(params);
         return Result.success(list);
     }
+    @GetMapping("/getProductWithPlan")
+    public Result getProductTechWithPlan(Params params){
+        PageInfo<Tech> list = techService.getTechByWithPlan(params);
+        return Result.success(list);
+    }
+
     @GetMapping("/search")
     public Result searchTechByProductName(Params params){
         PageInfo<Tech> list =techService.searchTechByProductName(params);

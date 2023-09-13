@@ -14,4 +14,5 @@ public class Product {
     int planNum;
     Date planDate;
     int produced;
+    int productConfirm;
 }
