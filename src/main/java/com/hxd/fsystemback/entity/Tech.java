@@ -2,6 +2,8 @@ package com.hxd.fsystemback.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class Tech {
 
@@ -14,6 +16,9 @@ public class Tech {
     private Integer num;
     private String partsGroup;
     private int preWarn;
+    private int planNum;
+    private int produced;
+    private Date planDate;
 
 
     private Integer id;

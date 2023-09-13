@@ -11,6 +11,7 @@ import com.hxd.fsystemback.entity.Parts;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.exception.CustomException;
 import jakarta.annotation.Resource;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +43,8 @@ public class FactoryService {
         logService.setLog("损耗了"+parts.getLost()+"个"+parts.getName());
     }
 
-    @Transactional
+
+    @Transactional//name produced
     public void dailyCheck(Product product) throws CustomException {
         if (StrUtil.isBlank(product.getName())){
             throw new CustomException("name为空");

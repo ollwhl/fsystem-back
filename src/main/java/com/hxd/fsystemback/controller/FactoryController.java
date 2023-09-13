@@ -28,7 +28,7 @@ public class FactoryController {
         factoryService.editLost(parts);
         return Result.success();
     }
-    @PostMapping("dailyCheck")//name produce
+    @PostMapping("dailyCheck")//name produced
     public Result dailyCheck(@RequestBody Product product) throws CustomException {
         factoryService.dailyCheck(product);
         return Result.success();

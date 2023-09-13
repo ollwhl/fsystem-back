@@ -1,5 +1,6 @@
 package com.hxd.fsystemback.service;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
@@ -56,7 +57,19 @@ public class PartsService {
     }
     public PageInfo<Parts> searchPartByName(Params params){
         PageHelper.startPage(params.getPageNum(), params.getPageSize());
-        List<Parts> list=partsMapper.searchPartsByName(params.getKeyword(),JwtTokenUtils.getUserByToken().getGroup());
+        String group = JwtTokenUtils.getUserByToken().getGroup();
+        List<Parts> list;
+        if(ObjectUtil.equal(group,"零件仓库") || ObjectUtil.equal(group,"半成品仓库")){
+            list=partsMapper.searchPartsByNameAndGroup(params.getKeyword(),JwtTokenUtils.getUserByToken().getGroup());
+        }else{
+            list=partsMapper.searchPartsByName(params.getKeyword());
+        }
+        return PageInfo.of(list);
+    }
+
+    public PageInfo<Product> searchProductByName(Params params) {
+        PageHelper.startPage(params.getPageNum(), params.getPageSize());
+        List<Product> list = productMapper.searchProductByName(params.getKeyword());
         return PageInfo.of(list);
     }
 
@@ -135,6 +148,7 @@ public class PartsService {
     public List<Parts> getBuyList(){
         return partsMapper.getBuyList();
     }
+
 
 
 }

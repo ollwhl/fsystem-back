@@ -24,11 +24,13 @@ public interface ProductMapper {
     @Update("UPDATE product SET plannum = #{planeNum}, plandate = #{planeDate} WHERE (`name` = #{productName});")
     void editPlane(String productName, int planeNum, Date planeDate);
 
-    @Update("UPDATE product SET `produce` = #{produce} WHERE (`name` = #{name});")
-    void dailyCheck(String name, int produce);
+    @Update("UPDATE product SET `produced` = #{produced} WHERE (`name` = #{name});")
+    void dailyCheck(String name, int produced);
 
     @Insert("INSERT INTO product (`id`,`name`, `standard`, `note`) VALUES (#{id},#{name},#{standard},#{note})")
     void addProduct(int id,String name, String standard, String note);
 
+    @Select("SELECT * FROM product WHERE name LIKE CONCAT('%', #{keyword}, '%')")
+    List<Product> searchProductByName(String keyword);
 
 }

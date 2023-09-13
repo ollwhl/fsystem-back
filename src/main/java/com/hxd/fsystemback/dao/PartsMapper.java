@@ -9,7 +9,10 @@ public interface PartsMapper {
     @Select("SELECT * FROM parts where `group` = #{group}")
     public List<Parts> getPart(@Param("group") String group);
     @Select("SELECT * FROM product WHERE name LIKE CONCAT('%', #{keyword}, '%') AND `group` = #{group}")
-    List<Parts>  searchPartsByName(@Param("keyword")String keyword,@Param("group") String group);
+    List<Parts>  searchPartsByNameAndGroup(@Param("keyword")String keyword,@Param("group") String group);
+
+    @Select("SELECT * FROM product WHERE name LIKE CONCAT('%', #{keyword}, '%')")
+    List<Parts>  searchPartsByName(@Param("keyword")String keyword);
 
     @Select("SELECT * FROM parts WHERE id = #{id}")
     Parts findPartByID(@Param("id")Integer id);

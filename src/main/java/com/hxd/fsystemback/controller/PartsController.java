@@ -62,9 +62,15 @@ public class PartsController {
         List<Parts> list = partsService.getBuyList();
         return Result.success(list);
     }
-    @GetMapping("/search")
+    @GetMapping("/searchParts")
    public Result searchPart(Params params){
         PageInfo<Parts> list=partsService.searchPartByName(params);
+        return Result.success(list);
+    }
+
+    @GetMapping("/searchProduct")
+    public Result searchProduct(Params params){
+        PageInfo<Product> list=partsService.searchProductByName(params);
         return Result.success(list);
     }
 
