@@ -11,7 +11,6 @@ import com.hxd.fsystemback.entity.Parts;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.exception.CustomException;
 import jakarta.annotation.Resource;
-import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +49,7 @@ public class FactoryService {
             throw new CustomException("name为空");
         }
         Product thisProduct = productMapper.findProductByName(product.getName());
-        productMapper.dailyCheck(product.getName(),product.getProduced()+thisProduct.getProduced());
+        productMapper.editProduced(product.getName(),product.getProduced()+thisProduct.getProduced());
 //        List<Tech> techList=techMapper.findTechByProductId(product.getId());
 //        Parts parts;
 //        for (Tech tech :techList){
@@ -60,7 +59,7 @@ public class FactoryService {
         logService.setLog("填写了生产进度 今日生产了"+product.getProduced()+"个"+product.getName());
     }
 
-    //name test
+    //name
     @Transactional
     public void confirmArrive(String name) throws CustomException {
         if (StrUtil.isBlank(name)){

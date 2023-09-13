@@ -22,4 +22,9 @@ public class LogController {
         PageInfo<Log> list = logService.getLog(params);
         return Result.success(list);
     }
+    @GetMapping("searchLog")
+    Result searchLog(Params params){
+        PageInfo<Log> list = logService.searchLog(params);
+        return Result.success(list);
+    }
 }

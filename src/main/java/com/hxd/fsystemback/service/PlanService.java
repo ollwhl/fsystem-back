@@ -57,6 +57,7 @@ public class PlanService {
         product.setPlanNum(0);
         product.setPlanDate(null);
         editPlane(product);
+        productMapper.editProduced(product.getName(),0);
         logService.setLog("删除了 "+product.getName()+" 的计划");
     }
 }

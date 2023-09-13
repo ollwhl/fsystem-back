@@ -25,7 +25,7 @@ public interface ProductMapper {
     void editPlane(String productName, int planeNum, Date planeDate);
 
     @Update("UPDATE product SET `produced` = #{produced} WHERE (`name` = #{name});")
-    void dailyCheck(String name, int produced);
+    void editProduced(String name, int produced);
 
     @Insert("INSERT INTO product (`id`,`name`, `standard`, `note`) VALUES (#{id},#{name},#{standard},#{note})")
     void addProduct(int id,String name, String standard, String note);
