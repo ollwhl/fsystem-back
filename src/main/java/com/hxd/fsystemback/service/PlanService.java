@@ -57,7 +57,13 @@ public class PlanService {
         product.setPlanNum(0);
         product.setPlanDate(null);
         editPlane(product);
+        Product thisProduct = productMapper.findProductByName(product.getName());
         productMapper.editProduced(product.getName(),0);
+        List<Tech> techList = techMapper.findTechByProductName(product.getName());
+        for (Tech tech : techList){
+            partsMapper.editMin(tech.getPartsId(),0);
+            partsMapper.editLost(tech.getPartsName(),0);
+        }
         logService.setLog("删除了 "+product.getName()+" 的计划");
     }
 }

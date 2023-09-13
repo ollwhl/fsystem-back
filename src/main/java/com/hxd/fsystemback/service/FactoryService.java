@@ -38,7 +38,9 @@ public class FactoryService {
         if (StrUtil.isBlank(parts.getName())){
             throw new CustomException("name为空");
         }
-        partsMapper.editLost(parts.getName(),parts.getLost());
+        Parts thisParts = partsMapper.findPartsByName(parts.getName());
+        partsMapper.editLost(parts.getName(),thisParts.getLost()+parts.getLost());
+        partsMapper.editMin(parts.getId(), thisParts.getMin()+ parts.getLost());
         logService.setLog("损耗了"+parts.getLost()+"个"+parts.getName());
     }
 
