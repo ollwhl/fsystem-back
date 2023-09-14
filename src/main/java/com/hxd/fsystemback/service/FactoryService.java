@@ -40,7 +40,7 @@ public class FactoryService {
         }
         Parts thisParts = partsMapper.findPartsByName(parts.getName());
         partsMapper.editLost(parts.getName(),thisParts.getLost()+parts.getLost());
-        partsMapper.editMin(parts.getId(), thisParts.getMin()+ parts.getLost());
+        partsMapper.editMin(thisParts.getId(), thisParts.getMin()+ parts.getLost());
         logService.setLog("损耗了"+parts.getLost()+"个"+parts.getName());
     }
 

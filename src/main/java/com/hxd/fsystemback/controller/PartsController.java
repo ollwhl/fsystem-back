@@ -25,7 +25,7 @@ public class PartsController {
     @Resource
     LogService logService;
 
-    @GetMapping("/getPart")
+    @GetMapping("/getParts")
     Result getPart(Params params){
         PageInfo<Parts> list = partsService.getPart(params);
         return Result.success(list);
