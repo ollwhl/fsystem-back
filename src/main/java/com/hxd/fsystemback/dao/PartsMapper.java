@@ -43,4 +43,7 @@ public interface PartsMapper {
 
     @Select("SELECT * FROM parts WHERE num < min")
     List<Parts> getBuyList();
+
+    @Select("SELECT * FROM parts WHERE lost <> 0")
+    List<Parts> getPartsByLost();
 }

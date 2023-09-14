@@ -55,6 +55,16 @@ public class PartsService {
         List<Product> list = productMapper.getProduct();
         return PageInfo.of(list);
     }
+
+    public List<Parts> getBuyList(){
+        return partsMapper.getBuyList();
+    }
+    public PageInfo<Parts> getPartsByLost(Params params) {
+        PageHelper.startPage(params.getPageNum(),params.getPageSize());
+        List<Parts> list = partsMapper.getPartsByLost();
+        return PageInfo.of(list);
+    }
+
     public PageInfo<Parts> searchPartByName(Params params){
         PageHelper.startPage(params.getPageNum(), params.getPageSize());
         String group = JwtTokenUtils.getUserByToken().getGroup();
@@ -145,10 +155,9 @@ public class PartsService {
         logService.setLog("修改了 "+parts.getName()+" 的备件数量为 "+parts.getPreWarn());
     }
 
-    public List<Parts> getBuyList(){
-        return partsMapper.getBuyList();
+
+
+    public void delLost(Parts parts) {
+        partsMapper.editLost(parts.getName(), 0);
     }
-
-
-
 }

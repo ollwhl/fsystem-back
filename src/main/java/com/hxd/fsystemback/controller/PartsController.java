@@ -73,6 +73,11 @@ public class PartsController {
         PageInfo<Product> list=partsService.searchProductByName(params);
         return Result.success(list);
     }
+    @GetMapping("/getPartsByLost")
+    public Result getPartsByLost(Params params){
+        PageInfo<Parts> list=partsService.getPartsByLost(params);
+        return Result.success(list);
+    }
 
     @PostMapping("/count")//传入零件的name和confirm
     public Result countPart(@RequestBody Parts parts) throws CustomException, IOException {
@@ -88,5 +93,12 @@ public class PartsController {
         partsService.addParts(parts);
         return Result.success();
     }
+
+    @PostMapping("/delLost")
+    public Result delLost(@RequestBody Parts parts){
+        partsService.delLost(parts);
+        return Result.success();
+    }
+
 
 }
