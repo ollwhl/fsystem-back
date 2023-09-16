@@ -52,5 +52,9 @@ public class UserController {
     public Result login(@RequestBody User user) throws CustomException {
         return userService.login(user);
     }
+    @PostMapping("/edit")
+    public Result edit(@RequestBody User user) throws CustomException {
+        return userService.editUser(user);
+    }
 
 }

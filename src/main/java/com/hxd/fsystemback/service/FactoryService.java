@@ -92,5 +92,6 @@ public class FactoryService {
         }
         Product thisProduct=productMapper.findProductByName(product.getName());
         productMapper.editProductNum(product.getName(),thisProduct.getNum()- product.getNum());
+        logService.setLog("出库了"+product.getNum()+"个"+product.getName());
     }
 }

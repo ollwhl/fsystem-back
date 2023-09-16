@@ -111,13 +111,13 @@ public class PartsService {
                 throw new CustomException("product already exist");
             }
             productMapper.addProduct(parts.getId(),parts.getName(),parts.getStandard(),parts.getNote());
-            logService.setLog("添加了产品（id："+parts.getId()+"）（名字："+parts.getName()+") （规格："+parts.getStandard()+"）（描述："+parts.getNote()+")");
+            logService.setLog("添加了产品（id："+parts.getId()+"）（名字："+parts.getName()+") （规格："+parts.getStandard()+"）（描述："+parts.getNote()+" )");
         }else{
             if (partsMapper.findPartsByName(parts.getName()) != null){
                 throw new CustomException("parts already exist");
             }
             partsMapper.addPart(parts.getId(), parts.getName(),parts.getStandard(),parts.getGroup(),parts.getNote(), parts.getPreWarn());
-            logService.setLog("添加了零件（id："+parts.getId()+"）（名字："+parts.getName()+") （仓库："+parts.getGroup()+"）（规格："+parts.getStandard()+"）（描述："+parts.getNote()+")（备件："+parts.getPreWarn()+")");
+            logService.setLog(" 添加了零件（id："+parts.getId()+" ）（名字："+parts.getName()+" ) （仓库："+parts.getGroup()+" ）（规格："+parts.getStandard()+" ）（ 描述："+parts.getNote()+" )（ 备件："+parts.getPreWarn()+" )");
         }
 
     }
@@ -139,9 +139,9 @@ public class PartsService {
             System.out.println(confirmNum);
             partsMapper.editPartConfirmNum(thisParts.getName(), confirmNum);
             partsMapper.editMin(thisParts.getId(), min);
-            logService.setLog("出库了"+(-parts.getConfirm())+"个"+parts.getName()+" id为"+thisParts.getId());
+            logService.setLog(" 出库了 "+(-parts.getConfirm())+" 个 "+parts.getName()+" id为 "+thisParts.getId());
         }else {
-            logService.setLog("入库了"+parts.getConfirm()+"个"+parts.getName()+" id为"+thisParts.getId());
+            logService.setLog("入库了 "+parts.getConfirm()+" 个 "+parts.getName()+" id为 "+thisParts.getId());
         }
         num = thisParts.getNum() + parts.getConfirm();
         partsMapper.editPartNum(thisParts.getId(), num);
@@ -159,5 +159,6 @@ public class PartsService {
 
     public void delLost(Parts parts) {
         partsMapper.editLost(parts.getName(), 0);
+        logService.setLog("清零了 "+parts.getName()+" 的损耗");
     }
 }

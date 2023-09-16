@@ -40,13 +40,17 @@ public class PlanService {
         if (StrUtil.isBlank(product.getName())){
             throw new CustomException("name为空");
         }
-        productMapper.editPlane(product.getName(),product.getPlanNum(),product.getPlanDate());
         List<Tech> techList = techMapper.findTechByProductName(product.getName());
+        System.out.println(techList);
+        if(techList.isEmpty()){
+            throw new CustomException("请先联系计划部添加该产品构成");
+        }
         int min;
         for(Tech tech : techList){
             min = (tech.getNum() * product.getPlanNum()) +tech.getPreWarn();
             partsMapper.editMin(tech.getPartsId(),min);
         }
+        productMapper.editPlane(product.getName(),product.getPlanNum(),product.getPlanDate());
         logService.setLog("修改了 "+product.getName()+" 的计划，计划期限为 "+product.getPlanDate()+" ，计划数量为 "+product.getPlanNum());
     }
     @Transactional

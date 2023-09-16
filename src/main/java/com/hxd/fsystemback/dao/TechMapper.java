@@ -87,7 +87,7 @@ public interface TechMapper {
             "FROM tech AS t \n" +
             "LEFT JOIN product p ON t.productid = p.id \n" +
             "LEFT JOIN parts pt ON t.partsid = pt.id \n" +
-            "WHERE p.name =#{productname} \n")
+            "WHERE t.id <> 0 AND p.name =#{productname} \n")
     List<Tech> findTechByProductName(String productName);
 
     @Select("SELECT t.*,\n" +

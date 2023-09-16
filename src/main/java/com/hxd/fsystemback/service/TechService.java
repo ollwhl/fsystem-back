@@ -85,9 +85,12 @@ public class TechService {
         logService.setLog("修改了 "+thisTech.getProductName()+" 的产品构成中的 "+thisTech.getPartsName()+" 的数量为 "+thisTech.getNum());
     }
     @Transactional
-    public void delTechParts(Tech tech) throws IOException {
-        techMapper.delTechParts(tech.getId());
+    public void delTechParts(Tech tech) throws IOException, CustomException {
         Tech thisTech = techMapper.findTechByID(tech.getId());
+        if(!productMapper.getPlane().isEmpty()){
+            throw new CustomException("该总成已有生产计划，请联系计划部，完成或删除该总成生产计划再删除构成");
+        }
+        techMapper.delTechParts(tech.getId());
         logService.setLog("删除了 "+thisTech.getProductName()+" 的产品构成中的 "+thisTech.getPartsName());
     }
 
@@ -105,6 +108,7 @@ public class TechService {
             }
             productMapper.addProduct(productId,productName,tech.getProductStandard(),tech.getProductNote());
             product = productMapper.findProductByName(productName);
+            logService.setLog("添加了产品（id："+product.getId()+"）（名字："+product.getName()+") （规格："+product.getStandard()+"）（描述："+product.getNote());
         }
 //        if(tech.getProductName()!=productName){
 //            throw new CustomException("parts not compare product");
@@ -118,6 +122,7 @@ public class TechService {
             throw new CustomException("parts already exist in this product tech");
         }
         techMapper.addTech(product.getId(),parts.getId(),tech.getNum());
+        logService.setLog("添加了总成构成（总成："+product.getName()+"）（零件："+parts.getName()+"）（数目："+tech.getNum()+"）");
     }
 
 }
