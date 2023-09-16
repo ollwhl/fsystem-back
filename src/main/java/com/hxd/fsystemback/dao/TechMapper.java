@@ -127,7 +127,7 @@ public interface TechMapper {
             "    pt.standard AS partsstandard,\n" +
             "    pt.`group` As partsGroup,\n" +
             "    pt.num AS partsnum,\n" +
-            "    pt.confirm AS partconfirm,\n" +
+            "    pt.confirm AS partsconfirm,\n" +
             "    pt.lost,\n" +
             "    pt.min\n" +
             "FROM tech AS t \n" +
