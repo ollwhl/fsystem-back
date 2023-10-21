@@ -2,7 +2,6 @@ package com.hxd.fsystemback.service;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.common.JwtTokenUtils;
@@ -12,7 +11,6 @@ import com.hxd.fsystemback.entity.Params;
 import com.hxd.fsystemback.entity.Parts;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.exception.CustomException;
-import com.hxd.fsystemback.exception.TransactionException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +31,9 @@ public class PartsService {
 //        String group =JwtTokenUtils.getGroupByToken(params.getToken());
 //        if (group.equals("管理员")){
 //            List<Parts> list = partsMapper.getAllPart();
-//            return PageInfo.of(list);
+//            return P
+//
+//            geInfo.of(list);
 //        }
         PageHelper.startPage(params.getPageNum(),params.getPageSize());
         List<Parts> list = partsMapper.getPart("零件仓库");
@@ -99,22 +99,30 @@ public class PartsService {
     }
 
     @Transactional
-    public void addParts(Parts parts) throws CustomException { //传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
+    public void addParts(Parts parts) throws CustomException { //传入id name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
         if (StrUtil.isBlank(parts.getName())){
             throw new CustomException("name为空");
         }
         if (parts.getGroup() == null){
-            Product product = productMapper.findProductByName(parts.getName());
+            Product thisProduct = productMapper.findProductByName(parts.getName());
             //System.out.println(product);
-            if (product != null){
-                //System.out.println("product already exist");
+            if (thisProduct != null){
                 throw new CustomException("product already exist");
+            }
+            thisProduct = productMapper.findProductById(parts.getId());
+            if (thisProduct != null){
+                throw new CustomException("该编号已被使用 请重新填写");
             }
             productMapper.addProduct(parts.getId(),parts.getName(),parts.getStandard(),parts.getNote());
             logService.setLog("添加了产品（id："+parts.getId()+"）（名字："+parts.getName()+") （规格："+parts.getStandard()+"）（描述："+parts.getNote()+" )");
         }else{
-            if (partsMapper.findPartsByName(parts.getName()) != null){
+            Parts thisParts = partsMapper.findPartsByName(parts.getName());
+            if (thisParts != null){
                 throw new CustomException("parts already exist");
+            }
+            thisParts = partsMapper.findPartByID(parts.getId());
+            if (thisParts != null){
+                throw new CustomException("该编号已被使用 请重新填写");
             }
             partsMapper.addPart(parts.getId(), parts.getName(),parts.getStandard(),parts.getGroup(),parts.getNote(), parts.getPreWarn());
             logService.setLog(" 添加了零件（id："+parts.getId()+" ）（名字："+parts.getName()+" ) （仓库："+parts.getGroup()+" ）（规格："+parts.getStandard()+" ）（ 描述："+parts.getNote()+" )（ 备件："+parts.getPreWarn()+" )");
@@ -139,9 +147,9 @@ public class PartsService {
             System.out.println(confirmNum);
             partsMapper.editPartConfirmNum(thisParts.getName(), confirmNum);
             partsMapper.editMin(thisParts.getId(), min);
-            logService.setLog(" 出库了 "+(-parts.getConfirm())+" 个 "+parts.getName()+" id为 "+thisParts.getId());
+            logService.setLog(" 出库了 "+(-parts.getConfirm())+" 个 "+parts.getName()+" 零件编号为 "+thisParts.getId());
         }else {
-            logService.setLog("入库了 "+parts.getConfirm()+" 个 "+parts.getName()+" id为 "+thisParts.getId());
+            logService.setLog("入库了 "+parts.getConfirm()+" 个 "+parts.getName()+" 零件编号为 "+thisParts.getId());
         }
         num = thisParts.getNum() + parts.getConfirm();
         partsMapper.editPartNum(thisParts.getId(), num);
@@ -154,7 +162,6 @@ public class PartsService {
         partsMapper.editPreWarn(parts.getName(), parts.getPreWarn());
         logService.setLog("修改了 "+parts.getName()+" 的备件数量为 "+parts.getPreWarn());
     }
-
 
 
     public void delLost(Parts parts) {

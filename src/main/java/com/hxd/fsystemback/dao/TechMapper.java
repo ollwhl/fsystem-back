@@ -60,10 +60,9 @@ public interface TechMapper {
             "    pt.lost,\n" +
             "    pt.min \n" +
             "FROM tech AS t \n" +
-            "LEFT JOIN product p ON t.productid = p.id \n" +
+            "INNER JOIN product p ON t.productid = p.id \n" +
             "LEFT JOIN parts pt ON t.partsid = pt.id \n" +
             "WHERE pt.name LIKE CONCAT('%', #{keyword}, '%') \n"+
-            "OR p.name LIKE CONCAT('%', #{keyword}, '%') \n" +
             "ORDER BY p.name ASC")
     List<Tech> searchTechByProductName(String keyword);
 

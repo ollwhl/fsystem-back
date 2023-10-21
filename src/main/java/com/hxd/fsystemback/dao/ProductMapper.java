@@ -15,14 +15,22 @@ public interface ProductMapper {
     @Select("SELECT * FROM product WHERE name = #{name}")
     Product findProductByName(String name);
 
+    @Select("SELECT * FROM product WHERE id = #{id}")
+    Product findProductById(Integer id);
     @Select("SELECT * FROM product WHERE planNum <> 0")
     List<Product> getPlane();
 
     @Select("SELECT * FROM parts WHERE name LIKE CONCAT('%', #{keyword}, '%') AND 'group' = #{group}")
     List<Parts>  searchPartsByName(@Param("keyword")String keyword, @Param("group") String group);
 
-    @Update("UPDATE product SET plannum = #{planeNum}, plandate = #{planeDate} WHERE (`name` = #{productName});")
-    void editPlane(String productName, int planeNum, Date planeDate);
+    @Update("UPDATE product " +
+            "SET plannum = #{planeNum}, " +
+            "partsDate = #{partsDate}, " +
+            "halfDate = #{halfDate}, " +
+            "producerDate = #{producerDate}, " +
+            "exportDate = #{exportDate}" +
+            "WHERE (`name` = #{productName});")
+    void editPlane(String productName, int planeNum, Date planeDate ,Date partsDate,Date halfDate,Date producerDate,Date exportDate);
 
     @Update("UPDATE product SET `produced` = #{produced} WHERE (`name` = #{name});")
     void editProduced(String name, int produced);
@@ -38,4 +46,6 @@ public interface ProductMapper {
 
     @Update("UPDATE product SET `num` = #{num} WHERE (`name` = #{name});")
     void editProductNum(String name, int num);
+
+
 }

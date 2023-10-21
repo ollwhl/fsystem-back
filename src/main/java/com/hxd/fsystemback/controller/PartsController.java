@@ -87,7 +87,7 @@ public class PartsController {
         return Result.success();
     }
 
-    @PostMapping("/addParts")//传入name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
+    @PostMapping("/addParts")//传入id name standard note group，如果group == null 则添加product 不为空则按照group添加零件或半成品
     public Result addParts(@RequestBody Parts parts) throws CustomException {
         System.out.println(parts);
         partsService.addParts(parts);

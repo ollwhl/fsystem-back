@@ -1,6 +1,5 @@
 package com.hxd.fsystemback.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.dao.PartsMapper;
@@ -11,7 +10,6 @@ import com.hxd.fsystemback.entity.Parts;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.entity.Tech;
 import com.hxd.fsystemback.exception.CustomException;
-import com.hxd.fsystemback.exception.TransactionException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,19 +102,16 @@ public class TechService {
         if(product == null){
             int productId=tech.getProductId();
             if (productId == 0){
-                throw new CustomException("product not exist,and don't have ID");
+                throw new CustomException("总成不存在 请重新添加");
             }
-            productMapper.addProduct(productId,productName,tech.getProductStandard(),tech.getProductNote());
-            product = productMapper.findProductByName(productName);
-            logService.setLog("添加了产品（id："+product.getId()+"）（名字："+product.getName()+") （规格："+product.getStandard()+"）（描述："+product.getNote());
+//            productMapper.addProduct(productId,productName,tech.getProductStandard(),tech.getProductNote());
+//            product = productMapper.findProductByName(productName);
+//            logService.setLog("添加了产品（id："+product.getId()+"）（名字："+product.getName()+") （规格："+product.getStandard()+"）（描述："+product.getNote());
         }
-//        if(tech.getProductName()!=productName){
-//            throw new CustomException("parts not compare product");
-//        }
         partsName = tech.getPartsName();
         parts = partsMapper.findPartsByName(partsName);
         if(parts == null){
-            throw new CustomException("parts not exist");
+            throw new CustomException("零件不存在");
         }
         if(techMapper.findTechByProductIdAndPartsId(product.getId(),parts.getId()) != null){
             throw new CustomException("parts already exist in this product tech");

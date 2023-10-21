@@ -13,6 +13,10 @@ public class Product {
     String note;
     int planNum;
     Date planDate;
+    Date partsDate;
+    Date halfDate;
+    Date producerDate;
+    Date exportDate;
     int produced;
     int productConfirm;
 }

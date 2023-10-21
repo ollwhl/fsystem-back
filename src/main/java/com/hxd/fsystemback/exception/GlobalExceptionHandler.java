@@ -14,34 +14,20 @@ import java.sql.SQLException;
 @ControllerAdvice(basePackages = "com.hxd.fsystemback.controller")
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-//    @ExceptionHandler(Exception.class)
-//    @ResponseBody
-//    public Result error(HttpServletRequest request,Exception e){
-//        log.error("UnKnowError: " + e.getMessage());
-//        return Result.error("UnKnowError:" + e.getMessage());
-//    }
-    @ExceptionHandler(SQLException.class)
-    @ResponseBody
-    public Result sqlError(HttpServletRequest request,SQLException e){
-        return Result.error("SqlError:" + e.getMessage());
-    }
 
-    @ExceptionHandler(CustomException.class)
+    @ExceptionHandler(Exception.class)
     @ResponseBody
-    public Result customError(HttpServletRequest request,CustomException e){
-        return Result.error(e.getMsg());
-    }
-
-//    @ExceptionHandler(NullPointerException.class)
-//    @ResponseBody
-//    public void handleNullPointerException(HttpServletRequest request, NullPointerException e) {
-//
-//    }
-
-    @ExceptionHandler(TransactionException.class)
-    @ResponseBody
-    public  Result handleTransactionException(HttpServletRequest request, TransactionException e){
-        return Result.error("TranslationException");
+    public Result error(HttpServletRequest request, Exception e) {
+        if (e instanceof SQLException) {
+            log.error("SQL Error: " + e.getMessage());
+            return Result.error("数据库错误:" + e.getMessage());
+        } else if (e instanceof CustomException) {
+            log.error("Custom Error: " + e.getMessage());
+            return Result.error("错误:" + e.getMessage());
+        } else {
+            log.error("Unknow Error: " + e.getMessage());
+            return Result.error("未知错误:" + e.getMessage());
+        }
     }
 
 }

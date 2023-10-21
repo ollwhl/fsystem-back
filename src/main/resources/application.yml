@@ -10,9 +10,9 @@ spring:
       allow-credentials: true # 是否允许携带凭证（如Cookie）
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
+    username: fsystem
     password: 1120
-    url: jdbc:mysql://localhost/fsystem?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://157.7.205.120/fsystem?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml
   config-location: classpath:mybatis-config.xml

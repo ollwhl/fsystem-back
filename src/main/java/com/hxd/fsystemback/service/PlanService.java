@@ -1,7 +1,6 @@
 package com.hxd.fsystemback.service;
 
 import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxd.fsystemback.dao.PartsMapper;
@@ -11,7 +10,6 @@ import com.hxd.fsystemback.entity.Params;
 import com.hxd.fsystemback.entity.Product;
 import com.hxd.fsystemback.entity.Tech;
 import com.hxd.fsystemback.exception.CustomException;
-import com.hxd.fsystemback.exception.TransactionException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,14 +41,14 @@ public class PlanService {
         List<Tech> techList = techMapper.findTechByProductName(product.getName());
         System.out.println(techList);
         if(techList.isEmpty()){
-            throw new CustomException("请先联系计划部添加该产品构成");
+            throw new CustomException("请先联系科技部添加该产品构成");
         }
         int min;
         for(Tech tech : techList){
             min = (tech.getNum() * product.getPlanNum()) +tech.getPreWarn();
             partsMapper.editMin(tech.getPartsId(),min);
         }
-        productMapper.editPlane(product.getName(),product.getPlanNum(),product.getPlanDate());
+        productMapper.editPlane(product.getName(),product.getPlanNum(),product.getPlanDate(),product.getPartsDate(),product.getHalfDate(),product.getProducerDate(),product.getExportDate());
         logService.setLog("修改了 "+product.getName()+" 的计划，计划期限为 "+product.getPlanDate()+" ，计划数量为 "+product.getPlanNum());
     }
     @Transactional

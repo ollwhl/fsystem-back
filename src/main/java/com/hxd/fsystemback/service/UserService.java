@@ -100,7 +100,10 @@ public class UserService {
     public Result login(User user) throws CustomException {
         User thisUser = userMapper.findUserByName(user.getName());
         if(thisUser==null){
-            throw new CustomException("User not Exist");
+            thisUser = userMapper.findUserByPhone(user.getName());
+            if (thisUser==null){
+                throw new CustomException("User not Exist");
+            }
         }
         if(Objects.equals(thisUser.getPassword(), user.getPassword())){
             thisUser.setToken(JwtTokenUtils.genToken(thisUser.getId().toString(),thisUser.getPassword()));
