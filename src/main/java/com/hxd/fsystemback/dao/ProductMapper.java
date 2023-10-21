@@ -25,6 +25,7 @@ public interface ProductMapper {
 
     @Update("UPDATE product " +
             "SET plannum = #{planeNum}, " +
+            "planeDate = #{planeDate}, " +
             "partsDate = #{partsDate}, " +
             "halfDate = #{halfDate}, " +
             "producerDate = #{producerDate}, " +
