@@ -58,8 +58,8 @@ public class PartsController {
     }
 
     @GetMapping("/getBuyList")
-    Result getBuyList(){
-        List<Parts> list = partsService.getBuyList();
+    Result getBuyList(String group){
+        List<Parts> list = partsService.getBuyList(group);
         return Result.success(list);
     }
     @GetMapping("/searchParts")

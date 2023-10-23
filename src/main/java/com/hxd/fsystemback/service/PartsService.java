@@ -56,8 +56,9 @@ public class PartsService {
         return PageInfo.of(list);
     }
 
-    public List<Parts> getBuyList(){
-        return partsMapper.getBuyList();
+    public List<Parts> getBuyList(String group){
+
+        return partsMapper.getBuyList(group);
     }
     public PageInfo<Parts> getPartsByLost(Params params) {
         PageHelper.startPage(params.getPageNum(),params.getPageSize());

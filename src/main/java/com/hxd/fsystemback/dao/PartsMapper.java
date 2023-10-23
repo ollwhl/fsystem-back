@@ -42,7 +42,7 @@ public interface PartsMapper {
     void editPreWarn(String name, int preWarn);
 
     @Select("SELECT * FROM parts WHERE num < min")
-    List<Parts> getBuyList();
+    List<Parts> getBuyList(String group);
 
     @Select("SELECT * FROM parts WHERE lost <> 0")
     List<Parts> getPartsByLost();
