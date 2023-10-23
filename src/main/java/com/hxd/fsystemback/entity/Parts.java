@@ -2,6 +2,8 @@ package com.hxd.fsystemback.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class Parts {
     private Integer id;
@@ -14,4 +16,7 @@ public class Parts {
     private String group;
     private int preWarn;
     private int lost;
+    private Date partsDate;
+    private Date halfDate;
+
 }

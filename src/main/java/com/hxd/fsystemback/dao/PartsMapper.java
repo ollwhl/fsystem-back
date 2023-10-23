@@ -41,7 +41,11 @@ public interface PartsMapper {
     @Update("UPDATE parts SET `prewarn` = #{preWarn} WHERE (`name` = #{name});")
     void editPreWarn(String name, int preWarn);
 
-    @Select("SELECT * FROM parts WHERE num < min")
+    @Select("SELECT parts.*, tech.productid, product.*,product.name AS productname,parts.name AS partsname\n" +
+            "FROM parts\n" +
+            "LEFT JOIN tech ON parts.id = tech.partsid\n" +
+            "LEFT JOIN product ON tech.productid = product.id\n" +
+            "WHERE parts.num < parts.min;")
     List<Parts> getBuyList(String group);
 
     @Select("SELECT * FROM parts WHERE lost <> 0")
